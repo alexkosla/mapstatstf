@@ -54,3 +54,8 @@ div.desc {
   padding: 5px;
   text-align: center;
 }
+
+body{
+  color: whitesmoke;
+  background-color: #333;
+}

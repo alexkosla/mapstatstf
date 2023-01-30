@@ -1,4 +1,4 @@
-ul {
+  ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -35,7 +35,8 @@ ul {
     background-color: #333;
   }
 
-  table, th, td {
+  /* .classstats table, th, td { */
+  .classstats, table {
     font-family: Arial, Helvetica, sans-serif;
     /* border: 1px solid; */
     width: 100%;
@@ -43,15 +44,15 @@ ul {
     table-layout: fixed;
   }
 
-  th{
+  th {
     height: 70px;
   }
 
-  tr:hover{
+  tr:hover {
     background-color:seagreen;
   }
 
-  td{
+  td {
     height: 25px;
     vertical-align: bottom;
     border: 1px solid;
@@ -61,4 +62,19 @@ ul {
 
   td:hover{
       background-color:#04AA6D;
+  }
+
+  .mapstats {
+    column-count: 2;
+    column-gap: 40px;
+  }
+
+  img {
+    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
+    /* align-content: center; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
