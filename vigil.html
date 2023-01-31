@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css"
+        href="mapstyles.css">
+    </head>
+    
+    <nav>
+        <ul>
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
+            <li><a class="active" href="index.html">Maps</a></li>
+            <li style="float:right"><a href="mystats.html">My Stats</a></li>
+        </ul>
+    </nav> 
+
+    <!-- The mapstats class will eventually dynamically get data
+    from the database as needed, these are placeholder numbers-->
+    <body>
+        <div class="mapstats">
+        <!-- the mapstats class uses css that splits it into two columns -->
+            <img src="img/pl_vigil_rc9-full.png">
+            <table>
+            <tr>
+                <td>Starting RED win %</td>
+                <td>46%</td>
+            </tr>
+            <tr>
+                <td>Median 1st hold time:</td>
+                <td>1:03</td>
+            </tr>
+            <tr>
+                <td>Median 2nd hold time:</td>
+                <td>2:34</td>
+            </tr>
+            <tr>
+                <td>Median 3rd hold time:</td>
+                <td>2:09</td>
+            </tr>
+            <tr>
+                <td>Median last hold time:</td>
+                <td>2:26</td>
+            </tr>
+
+            </table>
+      </div>
+      <div class="classstats">
+        <!-- hard-coded stats that are temporary
+            I'll put a bunch of stats in a database
+            and them access them via js eventually -->
+        <table>
+            <tr>
+              <th>Class</th>
+              <th>Kill/m</th>
+              <th>Assist/m</th>
+              <th>Death/m</th>
+              <th>Dpm</th>
+              <th>DmgT/m</th>
+            </tr>
+            <tr>
+              <td>Scout</td>
+              <td>1.01</td>
+              <td>0.44</td>
+              <td>0.65</td>
+              <td>317</td>
+              <td>232</td>
+            </tr>
+            <tr>
+              <td>Soldier</td>
+              <td>0.70</td>
+              <td>0.28</td>
+              <td>0.81</td>
+              <td>346</td>
+              <td>291</td>
+            </tr>
+            <tr>
+              <td>Pyro</td>
+              <td>0.52</td>
+              <td>0.47</td>
+              <td>0.59</td>
+              <td>185</td>
+              <td>278</td>
+            </tr>
+            <tr>
+              <td>Demo</td>
+              <td>0.64</td>
+              <td>0.35</td>
+              <td>0.65</td>
+              <td>437</td>
+              <td>347</td>
+            </tr>
+            <tr>
+              <td>Heavy</td>
+              <td>0.67</td>
+              <td>0.43</td>
+              <td>0.67</td>
+              <td>254</td>
+              <td>439</td>
+            </tr>
+            <tr>
+              <td>Engineer</td>
+              <td>0.51</td>
+              <td>0.40</td>
+              <td>0.48</td>
+              <td>190</td>
+              <td>170</td>
+            </tr>
+            <tr>
+              <td>Medic</td>
+              <td>0.02</td>
+              <td>0.61</td>
+              <td>0.30</td>
+              <td>7</td>
+              <td>121</td>
+            </tr>
+            <tr>
+              <td>Sniper</td>
+              <td>1.01</td>
+              <td>0.14</td>
+              <td>0.65</td>
+              <td>350</td>
+              <td>231</td>
+            </tr>
+            <tr>
+              <td>Spy</td>
+              <td>0.71</td>
+              <td>0.11</td>
+              <td>0.88</td>
+              <td>272</td>
+              <td>183</td>
+            </tr>
+        </table>
+      </div>
+    </body>
+</html>
