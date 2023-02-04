@@ -37,7 +37,8 @@ div.gallery {
   margin: 15px;
   border: 1px solid #ccc;
   float: left;
-  width: 180px;
+  /* width: 180px; */
+  width: 20%
 }
 
 div.gallery:hover {
@@ -47,6 +48,7 @@ div.gallery:hover {
 div.gallery img {
   border-radius: 25px;
   width: 100%;
+  max-width: 100%;
   height: auto;
 }
 
