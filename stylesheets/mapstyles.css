@@ -52,6 +52,14 @@
     background-color:seagreen;
   }
 
+  tr:nth-child(even) {
+      background-color: #444;
+  }
+
+  tr:nth-child(odd) {
+      background-color: #333;
+  }
+
   td {
     height: 25px;
     vertical-align: bottom;

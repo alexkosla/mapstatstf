@@ -1,0 +1,136 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+ li {
+    float: left;
+  }
+
+  li a {
+    font-family: Arial, Helvetica, sans-serif;
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #111;
+  }
+  
+  .active {
+    background-color: #04AA6D;
+  }
+
+  .class-sidebar div {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 16px;
+    font-size: 16px;
+    display: block;
+  }
+
+  .class-sidebar li {
+    /* display: inline; */
+    float: left;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .class-sidebar li a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    display: block;
+    color: white;
+    text-align: left;
+    padding: 16px;
+    text-decoration: none;
+  }
+
+  body{
+    color: whitesmoke;
+    background-color: #333;
+  }
+
+  th {
+    background-color: #04AA6D;
+    color: #fff;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+      background-color: #444;
+  }
+
+  tr:nth-child(odd) {
+      background-color: #333;
+  }
+
+  tr:hover {
+    background-color:seagreen;
+  }
+
+  td {
+    height: 10%;
+    vertical-align: center;
+    /* border: 1px solid;
+    border-color: yellowgreen;
+    border-radius: 5px; */
+  }
+
+  td .title {
+    border-color: tomato;
+  }
+
+  td:hover{
+      background-color:#04AA6D;
+  }
+
+  .column {
+    float: left;
+    padding: 10px;
+  }
+
+  .left-col {
+    width: 15%;
+    margin-left: 149px;
+    float: center;
+    /* height: 100%;
+    float: left; */
+  }
+
+  .left-col img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* margin-left: 149px; */
+  }
+
+  .right-col {
+    width: 70%;
+    /* margin-left: 149px; */
+  }
+
+  .right-col table{
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: 1px solid; */
+    width: 100%;
+    height: 50%;
+    border-collapse: collapse;
+    /* table-layout: fixed; */
+    table-layout: auto;
+    font-size: 24px;
+  }
+
+  .class-sidebar {
+    height: 100%;
+    width: 149px;
+    position: fixed;
+    /* background-color: #04AA6D; */
+  }
