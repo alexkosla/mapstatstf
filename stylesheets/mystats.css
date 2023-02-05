@@ -37,7 +37,6 @@ ul {
   }
 
   .class-sidebar li {
-    /* display: inline; */
     float: left;
     width: 100%;
     font-size: 16px;
@@ -79,9 +78,6 @@ ul {
   td {
     height: 10%;
     vertical-align: center;
-    /* border: 1px solid;
-    border-color: yellowgreen;
-    border-radius: 5px; */
   }
 
   td .title {
@@ -101,15 +97,12 @@ ul {
     width: 15%;
     margin-left: 149px;
     float: center;
-    /* height: 100%;
-    float: left; */
   }
 
   .left-col img {
     width: 100%;
     height: auto;
     display: block;
-    /* margin-left: 149px; */
   }
 
   .right-col {
@@ -119,11 +112,9 @@ ul {
 
   .right-col table{
     font-family: Arial, Helvetica, sans-serif;
-    /* border: 1px solid; */
     width: 100%;
     height: 50%;
     border-collapse: collapse;
-    /* table-layout: fixed; */
     table-layout: auto;
     font-size: 24px;
   }
@@ -132,5 +123,4 @@ ul {
     height: 100%;
     width: 149px;
     position: fixed;
-    /* background-color: #04AA6D; */
   }
