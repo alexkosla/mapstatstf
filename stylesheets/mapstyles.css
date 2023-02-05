@@ -102,5 +102,5 @@ td:hover{
 img {
   /* have the map image not take up the full column by only using 60% of its alloted area */
   width: 60%;
-  height: 60%;
+  height: auto;
 }
