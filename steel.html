@@ -1,15 +1,14 @@
 <html>
     <head>
-      <!-- there is a separate css file for all the map pages -->
+        <!-- there is a separate css file for all the map pages -->
         <link rel="stylesheet" type="text/css"
         href="stylesheets/mapstyles.css">
     </head>
     
-    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->
     <nav>
+        <!-- the active class will make the background behind the text green -->
+        <!-- I also aligned "My Stats" on the right using float:right -->
         <ul>
-          <!-- the active class will make the background behind the text green -->
-          <!-- I also aligned "My Stats" on the right using float:right -->
             <li><a class="active" href="index.html">mapstats.tf</a></li>
             <li><a class="active" href="index.html">Maps</a></li>
             <li style="float:right"><a href="sniper.html">My Stats</a></li>
@@ -22,30 +21,34 @@
       <div class="mapstats">
         <!-- the mapstats class uses css that splits it into two columns -->
         <!-- the image of the map is on the left -->
-        <img src="img/pl_upward_f10.png">
         <!-- on the right we'll have the map title (h1) -->
-        <h1>Upward</h1>
         <!-- and a simple table with dummy values for map stats -->
+        <img src="img/cp_steel_f12-full.png">
+        <h1>Steel</h1>
         <table>
           <tr>
             <td>Starting RED win %</td>
-            <td>55%</td>
+            <td>51%</td>
           </tr>
           <tr>
-            <td>Median 1st hold time:</td>
-            <td>1:47</td>
+            <td>Median A cap time:</td>
+            <td>0:49</td>
           </tr>
           <tr>
-            <td>Median 2nd hold time:</td>
-            <td>1:31</td>
+            <td>Median B cap time:</td>
+            <td>4:50</td>
           </tr>
           <tr>
-            <td>Median 3rd hold time:</td>
-            <td>2:01</td>
+            <td>Median C cap time:</td>
+            <td>5:12</td>
           </tr>
           <tr>
-            <td>Median last hold time:</td>
-            <td>3:53</td>
+            <td>Median D cap time:</td>
+            <td>6:56</td>
+          </tr>
+          <tr>
+            <td>Median E cap time:</td>
+            <td>7:33</td>
           </tr>
 
         </table>
@@ -55,13 +58,13 @@
             I'll put a bunch of stats in a database
             and them access them via js eventually -->
         <table>
-          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
           <col style="width:10%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
             <tr>
               <th>Class</th>
               <th>Kill/m</th>

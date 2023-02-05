@@ -1,10 +1,13 @@
 <html>
     <head>
+      <!-- there is a separate css file for all the map pages -->
         <link rel="stylesheet" type="text/css"
         href="stylesheets/mapstyles.css">
     </head>
     
     <nav>
+      <!-- the active class will make the background behind the text green -->
+      <!-- I also aligned "My Stats" on the right using float:right -->
         <ul>
             <li><a class="active" href="index.html">mapstats.tf</a></li>
             <li><a class="active" href="index.html">Maps</a></li>
@@ -16,8 +19,12 @@
     from the database as needed, these are placeholder numbers-->
     <body>
         <div class="mapstats">
-        <!-- the mapstats class uses css that splits it into two columns -->
+          <!-- the mapstats class uses css that splits it into two columns -->
+          <!-- the image of the map is on the left -->
+          <!-- on the right we'll have the map title (h1) -->
+          <!-- and a simple table with dummy values for map stats -->
             <img src="img/pl_swiftwater_final1-full.jpg">
+            <h1>Swiftwater</h1>
             <table>
             <tr>
                 <td>Starting RED win %</td>
@@ -51,6 +58,13 @@
             I'll put a bunch of stats in a database
             and them access them via js eventually -->
         <table>
+          <col style="width:10%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
             <tr>
               <th>Class</th>
               <th>Kill/m</th>
