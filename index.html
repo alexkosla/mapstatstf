@@ -4,6 +4,8 @@
     <!-- there is a separate css file for all the map pages -->
       <link rel="stylesheet" type="text/css"
       href="stylesheets/styles.css">
+      <script src="index.js"></script> 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   </head>
   
   <!-- this nav contains a list of pages to link to at the top, it's styled by css -->
@@ -11,25 +13,37 @@
       <ul>
         <!-- the active class will make the background behind the text green -->
         <!-- I also aligned "My Stats" on the right using float:right -->
-          <li><a class="active" href="index.html">mapstats.tf</a></li>
+          <div id="main">
+            <button class="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
+          </div>
+          <li id="indexmenu" onclick="toggleHamburgerMenu()"><a>H</a></li>
+          <li><a class="active">mapstats.tf</a></li>
           <li><a class="active" href="index.html">Maps</a></li>
-          <li style="float:right"><a href="sniper.html">My Stats</a></li>
-      </ul>
+          <li id="mystats" style="float:right"><a onclick="toggleHamburgerMenu()" href="sniper.html">My Stats</a></li>      
+        </ul>
   </nav> 
 
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <ul>
+        <!-- As all of the 9 classes would've had very similar pages, I only did 2 class pages, using sniper as the default -->
+        <li><a href="sniper.html">Sniper</a></li>
+        <li><a class="active" href="scout.html">Scout</a></li>
+    </ul>
+  </div>
     <body>
       <!-- an image gallery using the gallery class -->
-        <div class="gallery">
+        <div class="gallery" id="upward">
           <!-- target="_blank" will make the browser open the link (upward.html) in a new tab -->
           <a target="_blank" href="upward.html">
             <!-- load the image at the specified link, if it's not found, then display the alt text -->
-            <img src="img/pl_upward_f10.png" alt="Upward">
+            <img src="img/pl_upward_f10.png" alt="Upward" onclick="hideUpward()">
           </a>
           <!-- displays some h2 (subheader) text using div.desc in styles.css -->
           <div class="desc"><h2>Upward</h2></div>
         </div>
         
-        <div class="gallery">
+        <div class="gallery" id="swiftwater">
           <a target="_blank" href="swiftwater.html">
             <img src="img/pl_swiftwater_final1-full.jpg" alt="Swiftwater">
           </a>
