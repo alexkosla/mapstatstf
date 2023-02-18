@@ -10,7 +10,6 @@ function hideUpward() {
 function toggleHamburgerMenu(){
     console.log("activating hamburger menu");
     $('class-sidebar').animate({width: 'toggle'});
-    // $('class-sidebar')
 }
 
 /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */

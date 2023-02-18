@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css"
+        href="stylesheets/forms.css">
+    </head>
+    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->    
+    <nav>
+        <ul>
+            <!-- the active class will make the background behind the text green -->
+            <!-- I also aligned "My Stats" on the right using float:right -->
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
+            <li><a href="index.html">Maps</a></li>
+            <li style="float:right"><a class="active" href="sniper.html">My Stats</a></li>
+        </ul>
+    </nav>
+    <body>
+      <!-- the mystats class is split into 2 columns, one for the class image and one for the table -->
+      <h2 style="text-align:center">
+          Add new user
+      </h1>
+      <div class="container">
+        <form action="action_page.php">
+          <div class="row">
+            <div class="col-25">
+              <label for="username">Username</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="username" name="username" placeholder="Enter username">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="steamid">Steam Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="steamid" name="steamid" placeholder="Enter steam id">
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-25">
+              <label for="country">Country</label>
+            </div>
+            <div class="col-75">
+              <select id="country" name="country">
+                <option value="australia">Australia</option>
+                <option value="canada">Canada</option>
+                <option value="usa">USA</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="subject">Subject</label>
+            </div>
+            <div class="col-75">
+              <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+            </div> -->
+          </div>
+          <div class="row">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+      </div> 
+    </body>
+</html>

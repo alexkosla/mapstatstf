@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css"
+        href="stylesheets/forms.css">
+        <script src="new-stats.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->    
+    <nav>
+        <ul>
+            <!-- the active class will make the background behind the text green -->
+            <!-- I also aligned "My Stats" on the right using float:right -->
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
+            <li><a href="index.html">Maps</a></li>
+            <li style="float:right"><a class="active" href="sniper.html">My Stats</a></li>
+        </ul>
+    </nav>
+    <body>
+      <!-- the mystats class is split into 2 columns, one for the class image and one for the table -->
+      <h2 style="text-align:center">
+          Submit new stats
+      </h1>
+      <div class="container">
+          <!-- https://www.w3schools.com/js/js_validation.asp -->
+        <form id="fstats" onsubmit="return validateForm()" method="post">
+          <div class="row">
+            <div class="col-25">
+              <label for="username">Username</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="username" name="username" placeholder="Enter username">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="steamid">Steam Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="steamid" name="steamid" placeholder="Enter steam id">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="logid">Log Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="logid" name="logid" placeholder="Enter the logs.tf id (logs.tf/[this number])">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="map">Map</label>
+            </div>
+            <div class="col-75">
+              <select id="map" name="map">
+                <option value="upward">Upward</option>
+                <option value="swiftwater">Swiftwater</option>
+                <option value="vigil">Vigil</option>
+                <option value="steel">Steel</option>
+                <option value="product">Product</option>
+                <option value="ashville">Ashville</option>
+                <option value="proot">Proot</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="class">Class</label>
+            </div>
+            <div class="col-75">
+              <select id="class" name="class">
+                <option value="scout">Scout</option>
+                <option value="spy">Spy</option>
+                <option value="sniper">Sniper</option>
+                <option value="medic">Medic</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="killcount">Kills</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="killcount" name="killcount" placeholder="Enter number of kills">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="deathcount">Deaths</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="deathcount" name="deathcount" placeholder="Enter number of deaths">
+            </div>
+          </div>
+          <div class="row">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+      </div> 
+    </body>
+</html>
