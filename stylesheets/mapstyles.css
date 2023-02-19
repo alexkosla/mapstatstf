@@ -92,6 +92,7 @@ td {
   /* use a light green border for every cell */
   border: 1px solid;
   border-color: yellowgreen;
+  text-align: center;
 }
 
 /* highlight the specific selected cell in a darker green*/
