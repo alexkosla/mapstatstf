@@ -2,6 +2,8 @@ function validateForm() {
     var missingFields = new Array();
     let errormsg = "";
 
+    // for every field in the form, get its value and check if it's empty
+    // if it's empty, then add it to a list of missing fields
     let username = document.forms["fstats"]["username"].value;
     if (username == "") {
       missingFields.push("Username");
@@ -42,10 +44,10 @@ function validateForm() {
       missingFields.push("Damage");
     }
 
-    console.log(missingFields);
+    // for all of the missing fields noted, make a string list of them that will
+    // be formatted nicely to be sent as an alert of all the unfilled fields
     if(missingFields.length > 0)
     {
-        console.log(missingFields);
         for(let i = 0; i < missingFields.length; i++)
         {
             let field = missingFields[i];
@@ -65,6 +67,7 @@ function validateForm() {
         return false;
     }
     else{
+        // if there are no missing fields, save the entered data and then send an alert
         saveStats();
         alert("Stats saved!");
     }
@@ -112,19 +115,87 @@ function saveStats(){
     localStorage.setItem('stats', JSON.stringify(toSaveDict));
 }
 
+function displaySavedRows(table, loadedStats)
+{
+    // check if there are any stats loaded from local storage
+    if(loadedStats)
+    {
+        count = loadedStats.username.length;
+        for (let i = 0; i < count; i++)
+        {
+            // if the table has data rows in it, 
+            // for every entry loaded in from localstorage, delete the first data row
+            // table row 0 is the header, so we don't want to delete that
+            // this will incrementally delete all previously loaded entries in the table
+            if(table.rows.length > 1)
+            {
+                table.deleteRow(1);
+            }
+        }
+
+        // for each loaded entry, create a data row
+        for (let i = 0; i < count; i++)
+        {
+            const row = document.createElement("tr");
+
+            // create a cell in the row for the username, set the text to be loaded text
+            // and then add it to the row
+            const cUsername = document.createElement("td");
+            const cUsernameText = document.createTextNode(loadedStats.username[i]);
+            cUsername.appendChild(cUsernameText);
+            row.appendChild(cUsername);
+
+            // repeat for all of the saved stats
+            const cSteamId = document.createElement("td");
+            const cSteamIdText = document.createTextNode(loadedStats.steamId[i]);
+            cSteamId.appendChild(cSteamIdText);
+            row.appendChild(cSteamId);
+
+            const cLogId = document.createElement("td");
+            const cLogIdText = document.createTextNode(loadedStats.logId[i]);
+            cLogId.appendChild(cLogIdText);
+            row.appendChild(cLogId);
+
+            const cMap = document.createElement("td");
+            const cMapText = document.createTextNode(loadedStats.map[i]);
+            cMap.appendChild(cMapText);
+            row.appendChild(cMap);
+
+            const cClass = document.createElement("td");
+            const cClassText = document.createTextNode(loadedStats.class[i]);
+            cClass.appendChild(cClassText);
+            row.appendChild(cClass);
+
+            const cKills = document.createElement("td");
+            const cKillText = document.createTextNode(loadedStats.kills[i]);
+            cKills.appendChild(cKillText);
+            row.appendChild(cKills);
+
+            const cDeaths = document.createElement("td");
+            const cDeathsText = document.createTextNode(loadedStats.deaths[i]);
+            cDeaths.appendChild(cDeathsText);
+            row.appendChild(cDeaths);
+
+            const cDamage = document.createElement("td");
+            const cDamageText = document.createTextNode(loadedStats.damage[i]);
+            cDamage.appendChild(cDamageText);
+            row.appendChild(cDamage);
+
+            // finally once we're done adding cells onto the row, we append the row onto the table
+            table.append(row);
+        }
+    }
+    else
+    {
+        alert("No stats saved! Try submitting some first.");
+    }
+
+}
+
 function loadStats(){
-    // get the stats table by its ID to reference later
+    // load the table and locally stored stats and pass them to a function that will display the data
     const table = document.getElementById('all-stats');
     var loadedStats = JSON.parse(localStorage.getItem('stats'));
-    console.log(loadedStats);
 
-    /* TO-DO
-    *  Load the stats in this function and incrementally add them in as rows
-    *  https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
-    *  Be able to trigger loadStats by a button
-    *  Add comments
-    *  FIX SIDEBAR FORMATTING
-    */
-
-    // for(let i = 0; i < )
+    displaySavedRows(table, loadedStats);
 }

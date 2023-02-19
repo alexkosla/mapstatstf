@@ -22,7 +22,7 @@
       </h1>
       <div class="container">
           <!-- https://www.w3schools.com/js/js_validation.asp -->
-        <form id="fstats" onsubmit="return validateForm()" method="post">
+        <form id="fstats" method="post">
           <div class="row">
             <div class="col-25">
               <label for="username">Username</label>
@@ -69,10 +69,10 @@
             </div>
             <div class="col-75">
               <select id="class" name="class">
-                <option value="scout">Scout</option>
-                <option value="spy">Spy</option>
-                <option value="sniper">Sniper</option>
-                <option value="medic">Medic</option>
+                <option value="Scout">Scout</option>
+                <option value="Spy">Spy</option>
+                <option value="Sniper">Sniper</option>
+                <option value="Medic">Medic</option>
               </select>
             </div>
           </div>
@@ -101,9 +101,11 @@
             </div>
           </div>
           <div class="row">
-            <button class="loadbutton" type="button" 
-                id="load-stats" onclick="loadStats()">Load Stats</button>
-            <input type="submit" value="Submit">
+            <button class="btn-load" type="button" style="float: left" 
+                id="btn-load" onclick="loadStats()">Load Stats</button>
+            <button class="btn-submit" type="button" style="float: right;"
+                id="btn-submit" onclick="validateForm()">Submit</button>
+            <!-- <input type="submit" value="Submit"> -->
           </div>
         </form>
       </div> 
@@ -128,78 +130,6 @@
               <th><h2>Kills</h2></th>
               <th><h2>Deaths</h2></th>
               <th><h2>Damage</h2></th>
-            </tr>
-            <tr>
-              <td>Scout</td>
-              <td>1.01</td>
-              <td>0.44</td>
-              <td>0.65</td>
-              <td>317</td>
-              <td>232</td>
-            </tr>
-            <tr>
-              <td>Soldier</td>
-              <td>0.70</td>
-              <td>0.28</td>
-              <td>0.81</td>
-              <td>346</td>
-              <td>291</td>
-            </tr>
-            <tr>
-              <td>Pyro</td>
-              <td>0.52</td>
-              <td>0.47</td>
-              <td>0.59</td>
-              <td>185</td>
-              <td>278</td>
-            </tr>
-            <tr>
-              <td>Demoman</td>
-              <td>0.64</td>
-              <td>0.35</td>
-              <td>0.65</td>
-              <td>437</td>
-              <td>347</td>
-            </tr>
-            <tr>
-              <td>Heavy</td>
-              <td>0.67</td>
-              <td>0.43</td>
-              <td>0.67</td>
-              <td>254</td>
-              <td>439</td>
-            </tr>
-            <tr>
-              <td>Engineer</td>
-              <td>0.51</td>
-              <td>0.40</td>
-              <td>0.48</td>
-              <td>190</td>
-              <td>170</td>
-            </tr>
-            <tr>
-              <td>Medic</td>
-              <td>0.02</td>
-              <td>0.61</td>
-              <td>0.30</td>
-              <td>7</td>
-              <td>121</td>
-            </tr>
-            <tr>
-              <td>Sniper</td>
-              <td>1.01</td>
-              <td>0.14</td>
-              <td>0.65</td>
-              <td>350</td>
-              <td>231</td>
-            </tr>
-            <tr>
-              <td>Spy</td>
-              <td>0.71</td>
-              <td>0.11</td>
-              <td>0.88</td>
-              <td>272</td>
-              <td>183</td>
             </tr>
         </table>
       </div>
