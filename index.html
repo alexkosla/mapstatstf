@@ -3,7 +3,7 @@
   <head>
     <!-- there is a separate css file for all the map pages -->
       <link rel="stylesheet" type="text/css"
-      href="stylesheets/styles.css">
+      href="stylesheets/index.css">
       <script src="index.js"></script> 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   </head>
@@ -14,11 +14,10 @@
         <!-- the active class will make the background behind the text green -->
         <!-- I also aligned "My Stats" on the right using float:right -->
           <div id="main">
-            <button class="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
+            <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
+            <li><a class="active">mapstats.tf</a></li>
+            <li><a class="active" href="index.html">Maps</a></li>
           </div>
-          <li id="indexmenu" onclick="toggleHamburgerMenu()"><a>H</a></li>
-          <li><a class="active">mapstats.tf</a></li>
-          <li><a class="active" href="index.html">Maps</a></li>
           <li id="mystats" style="float:right"><a onclick="toggleHamburgerMenu()" href="sniper.html">My Stats</a></li>      
         </ul>
   </nav> 
