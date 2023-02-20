@@ -45,12 +45,18 @@ ul {
     font-family: Arial, Helvetica, sans-serif;
     color: whitesmoke;
     background-color: #333;
+    /* force content to have no margin topleft */
     margin: 0px;
     padding: 0px;
   }
   
  
- /* Style inputs, select elements and textareas */
+ /* Style inputs, select elements and textareas 
+    for the input field when it's of text type
+    12px padding all around
+    a solid grey border with rounded edges
+    width of 100% includes the border (border-box)
+    the text input will resize vertically if needed */
  input[type=text], select, textarea{
     width: 100%;
     padding: 12px;
@@ -60,14 +66,19 @@ ul {
     resize: vertical;
   }
   
-  /* Style the label to display next to the inputs */
+  /* Style the label to display next to the inputs 
+      12px padding all sides except left
+      have it appear inline in block style */
   label {
     padding: 12px 12px 12px 0;
     display: inline-block;
   }
   
-  /* Style the submit button */
-  /* input[type=submit] { */
+  /* Style the submit button 
+     12px padding for top and bottom
+     20px for left and right
+     10% wide, color scheme change
+     round border, cursor appears as a pointer on it*/
   button {
     width: 10%;
     background-color: #04AA6D;
@@ -79,7 +90,12 @@ ul {
   }
 
   
-  /* Style the load button */
+  /* Style the load button
+    correct color scheme
+    12px padding on top and bottom, 20 left and right
+    no border but make the edges of the button rounded
+    on mouse-over use a pointer cursor
+    align the button on the left */
   .loadbutton {
     background-color: #04AA6D;
     color: whitesmoke;
@@ -101,21 +117,21 @@ ul {
   .col-25 {
     float: left;
     width: 25%;
-    margin-top: 6px;
+    margin-top: 6px; /* use a margin for the top */
   }
   
   /* Floating column for inputs: 75% width */
   .col-75 {
     float: left;
     width: 75%;
-    margin-top: 6px;
+    margin-top: 6px; /* use a margin for the top */
   }
   
   /* Clear floats after the columns */
   .row:after {
-    content: "";
-    display: table;
-    clear: both;
+    content: ""; /* display nothing after the row */
+    display: grid; /* use a grid layout */
+    clear: both; /* moves border edge down and evens it out */
   }
   
   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
