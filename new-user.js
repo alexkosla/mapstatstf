@@ -50,7 +50,7 @@ function saveStats(){
     var toSave = document.forms["fstats"];
 
     // try to load any saved states and parse them as a dict
-    var loadedStats = JSON.parse(localStorage.getItem('stats'));
+    var loadedStats = JSON.parse(localStorage.getItem('users'));
     let toSaveDict = {};
 
     // format the output of the isAdmin checkbox to be a capitalized bool
@@ -79,7 +79,7 @@ function saveStats(){
     }
 
     // save the dict you've added the form stats to to local storage
-    localStorage.setItem('stats', JSON.stringify(toSaveDict));
+    localStorage.setItem('users', JSON.stringify(toSaveDict));
     loadStats();
 }
 
@@ -138,7 +138,7 @@ function displaySavedRows(table, loadedStats)
 function loadStats(){
     // load the table and locally stored stats and pass them to a function that will display the data
     const table = document.getElementById('user-stats');
-    var loadedStats = JSON.parse(localStorage.getItem('stats'));
+    var loadedStats = JSON.parse(localStorage.getItem('users'));
 
     displaySavedRows(table, loadedStats);
 }

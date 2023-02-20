@@ -113,6 +113,7 @@ function saveStats(){
 
     // save the dict you've added the form stats to to local storage
     localStorage.setItem('stats', JSON.stringify(toSaveDict));
+    loadStats();
 }
 
 function displaySavedRows(table, loadedStats)
