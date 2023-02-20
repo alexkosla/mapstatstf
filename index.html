@@ -4,7 +4,10 @@
     <!-- there is a separate css file for all the map pages -->
       <link rel="stylesheet" type="text/css"
       href="stylesheets/index.css">
-      <script src="index.js"></script> 
+      <link rel="stylesheet" type="text/css"
+      href="stylesheets/sidebar.css">
+      <!-- separate file for the javascript code and i'll also need to reference some kind of jquery -->
+      <script src="sidebar.js"></script> 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   </head>
   
@@ -14,18 +17,21 @@
         <!-- the active class will make the background behind the text green -->
         <!-- I also aligned "My Stats" on the right using float:right -->
           <div id="main">
+            <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
             <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
             <li><a class="active">mapstats.tf</a></li>
             <li><a class="active" href="index.html">Maps</a></li>
           </div>
-          <li id="mystats" style="float:right"><a onclick="toggleHamburgerMenu()" href="sniper.html">My Stats</a></li>      
+          <li style="float:right"><a href="sniper.html">My Stats</a></li>      
         </ul>
   </nav> 
 
+  <!-- a sidebar that is defined by the sidebar class in css -->
   <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <!-- a close button that triggers the closeNav function -->
+    <a class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
-        <!-- As all of the 9 classes would've had very similar pages, I only did 2 class pages, using sniper as the default -->
+        <!-- links to the two form pages -->
         <li><a href="new-user.html">Add new user</a></li>
         <li><a href="new-stats.html">Submit stats</a></li>
     </ul>

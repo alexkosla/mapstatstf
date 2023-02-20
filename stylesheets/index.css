@@ -40,67 +40,6 @@ li a:hover {
   background-color: #04AA6D;
 } 
 
-/* The sidebar menu */
-.sidebar {
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Stay on top */
-  top: 0;
-  left: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-  background-color: #04AA6D;
-}
-
-/* The sidebar links */
-.sidebar a {
-  padding: 8px 8px 8px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: whitesmoke;
-  display: block;
-  transition: 0.3s;
-  background-color: #04AA6D;
-  width: 100%;
-}
-
-/* Position and style the close button (top right corner) */
-.sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 5px;
-  font-size: 36px;
-  margin-left: 50px;
-  width: 15%;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-  transition: margin-left .5s; /* If you want a transition effect */
-  padding: 0px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
-} 
-
-.hamburger-btn {
-  position: absolute;
-  top: 0;
-  right: -50px;
-  width: 50px;
-  height: 50px;
-  box-sizing: border-box;
-  cursor: pointer;
-  background: cadetblue;
-  border: none;
-  outline: none;
-}
-
 div.gallery {
   /* use rounded edges for the map image boxes */
   border-radius: 30px;

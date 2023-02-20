@@ -51,6 +51,7 @@ body{
   height: 100%;
   width: 149px;
   /* force the nav to be on the left */
+  padding-left: 54px;
   position: fixed;
 }
 
@@ -87,7 +88,7 @@ body{
   /* have the image take up 15% of the page width */
   width: 15%;
   /* use a margin so the image doesn't collide with the left nav */
-  margin-left: 149px;
+  margin-left: 203px;
   /* center the image in the left column */
   float: center;
 }
@@ -100,7 +101,7 @@ body{
 
 .right-col {
   /* have the right column take up 70% width */
-  width: 70%;
+  width: 65%;
 }
 
 .right-col table{
