@@ -22,6 +22,11 @@
     background-color: #04AA6D;
     width: 220px; /* hardcoded to be the same width as the sidebar */
   }
+
+  /* use a slightly brighter white for the text when the sidebar text is hovered */
+  .sidebar a:hover{
+    color: white;
+  }
   
   /* Position and style the close button (top right corner) */
   .sidebar .closebtn {

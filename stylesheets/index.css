@@ -28,6 +28,7 @@ li a {
   padding: 14px 16px;
   /* removes underlines */
   text-decoration: none;
+  height: 36px;
 }
 
 /* Change the link color to seagreen on hover */
