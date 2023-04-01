@@ -1,3 +1,5 @@
+const url = "http://localhost:8080/lecture";
+
 function validateForm() {
     var missingFields = new Array();
     let errormsg = "";
@@ -44,6 +46,14 @@ function validateForm() {
     }
   } 
 
+$("#addUserForm").submit(function(event){
+    let request = {
+
+    }
+
+    }
+)
+
 function saveStats(){
 
     // get all of the stats from the form
@@ -79,8 +89,30 @@ function saveStats(){
     }
 
     // save the dict you've added the form stats to to local storage
-    localStorage.setItem('users', JSON.stringify(toSaveDict));
-    loadStats();
+    request = JSON.stringify(toSaveDict);
+    localStorage.setItem('users', request);
+
+    event.preventDefault();
+    fetch(url, {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(request)})
+    .then(async response => {
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await response.json() : null;
+
+        if (!response.ok) {
+            return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
+        }
+        loadStats();
+    })
+    .catch(error => {
+        alert('There was an error!\n' +  error.message);
+    }).finally(() => {
+         $('.form-popup').hide();
+    });
+
+//    return JSON.stringify(toSaveDict);
 }
 
 function displaySavedRows(table, loadedStats)
