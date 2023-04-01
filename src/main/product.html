@@ -1,6 +1,6 @@
 <html>
     <head>
-        <!-- there is a separate css file for all the map pages -->
+      <!-- there is a separate css file for all the map pages -->
         <link rel="stylesheet" type="text/css"
         href="stylesheets/mapstyles.css">
         <link rel="stylesheet" type="text/css"
@@ -10,17 +10,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     
+    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->
     <nav>
-        <!-- the active class will make the background behind the text green -->
-        <!-- I also aligned "My Stats" on the right using float:right -->
         <ul>
+          <!-- the active class will make the background behind the text green -->
+          <!-- I also aligned "My Stats" on the right using float:right -->
           <div id="main">
             <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
             <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
-            <li><a class="active">mapstats.tf</a></li>
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
             <li><a href="index.html">Maps</a></li>
           </div>
-            <li style="float:right"><a href="sniper.html">My Stats</a></li>
+          <li style="float:right"><a href="sniper.html">My Stats</a></li>
         </ul>
     </nav> 
 
@@ -42,34 +43,34 @@
       <div class="mapstats">
         <!-- the mapstats class uses css that splits it into two columns -->
         <!-- the image of the map is on the left -->
+        <img src="img/koth_product_final.png">
         <!-- on the right we'll have the map title (h1) -->
-        <!-- and a simple table with dummy values for map stats -->
-        <img src="img/cp_steel_f12-full.png">
-        <h1>Steel</h1>
+        <h1>Product</h1>
+        <!-- and a simple table with dummy values for map stats, this varies for each map -->
         <table>
           <tr>
-            <td>Starting RED win %</td>
+            <td>RED win %</td>
             <td>51%</td>
           </tr>
           <tr>
-            <td>Median A cap time:</td>
-            <td>0:49</td>
+            <td>RED mid win %</td>
+            <td>51%</td>
           </tr>
           <tr>
-            <td>Median B cap time:</td>
-            <td>4:50</td>
+            <td>Average midfight length</td>
+            <td>1:04</td>
           </tr>
           <tr>
-            <td>Median C cap time:</td>
-            <td>5:12</td>
+            <td>Average round time</td>
+            <td>5:27</td>
           </tr>
           <tr>
-            <td>Median D cap time:</td>
-            <td>6:56</td>
+            <td>Average ubers used per team per round</td>
+            <td>3.31</td>
           </tr>
           <tr>
-            <td>Median E cap time:</td>
-            <td>7:33</td>
+            <td>Average drops per team per round</td>
+            <td>0.66</td>
           </tr>
 
         </table>
@@ -79,13 +80,13 @@
             I'll put a bunch of stats in a database
             and them access them via js eventually -->
         <table>
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
           <col style="width:10%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
-          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
             <tr>
               <th>Class</th>
               <th>Kill/m</th>
