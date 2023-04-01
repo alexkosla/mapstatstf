@@ -1,11 +1,13 @@
 package ie.dcu.mapstatstf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class UserService {
     private Map<String, UserModel> users = new HashMap<>();
     public UserService() {
@@ -32,5 +34,6 @@ public class UserService {
             System.out.println("unable to stringify user '" + user.getUsername() + "' to .json file");
             ex.printStackTrace();
         }
+        return user;
     }
 }

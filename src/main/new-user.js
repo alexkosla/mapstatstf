@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/lecture";
+const url = "http://localhost:8082/submit-user";
 
 function validateForm() {
     var missingFields = new Array();
@@ -7,12 +7,12 @@ function validateForm() {
     // for every field in the form, get its value and check if it's empty
     // if it's empty, then add it to a list of missing fields
     // debugger
-    let username = document.forms["fstats"]["username"].value;
+    let username = document.forms["addUserForm"]["username"].value;
     if (username == "") {
       missingFields.push("Username");
     }
     
-    let steamid = document.forms["fstats"]["steamId"].value;
+    let steamid = document.forms["addUserForm"]["steamId"].value;
     if (steamid == "") {
       missingFields.push("Steam ID");
     }
@@ -46,18 +46,18 @@ function validateForm() {
     }
   } 
 
-$("#addUserForm").submit(function(event){
-    let request = {
-
-    }
-
-    }
-)
+//$("#addUserForm").submit(function(event){
+//    let request = {
+//
+//    }
+//
+//    }
+//)
 
 function saveStats(){
 
     // get all of the stats from the form
-    var toSave = document.forms["fstats"];
+    var toSave = document.forms["addUserForm"];
 
     // try to load any saved states and parse them as a dict
     var loadedStats = JSON.parse(localStorage.getItem('users'));
@@ -69,30 +69,37 @@ function saveStats(){
     else
         toSave.isAdmin.value = "False";
 
+    toSaveDict = {
+        username: toSave.username.value,
+        steamId: toSave.steamId.value,
+        isAdmin: toSave.isAdmin.value
+        }
+
     // if there are stats in localStorage, append the ones from the form onto them
-    if(loadedStats != null)
-    {
-        toSaveDict = loadedStats;
-        toSaveDict.username.push(toSave.username.value);
-        toSaveDict.steamId.push(toSave.steamId.value);
-        toSaveDict.isAdmin.push(toSave.isAdmin.value);
-    }
-    else
-    {
+//    if(loadedStats != null)
+//    {
+//        toSaveDict = loadedStats;
+//        toSaveDict.username.push(toSave.username.value);
+//        toSaveDict.steamId.push(toSave.steamId.value);
+//        toSaveDict.isAdmin.push(toSave.isAdmin.value);
+//    }
+//    else
+//    {
         // if there aren't any stats saved in localStorage, then create a new
         // dict of arrays to hold the stats
-        toSaveDict = {
-            username: [toSave.username.value],
-            steamId: [toSave.steamId.value],
-            isAdmin: [toSave.isAdmin.value]
-        }
-    }
+//        toSaveDict = {
+//            username: [toSave.username.value],
+//            steamId: [toSave.steamId.value],
+//            isAdmin: [toSave.isAdmin.value]
+//        }
+//    }
 
     // save the dict you've added the form stats to to local storage
     request = JSON.stringify(toSaveDict);
     localStorage.setItem('users', request);
 
     event.preventDefault();
+    console.log("about to try submitting users");
     fetch(url, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
