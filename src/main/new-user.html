@@ -61,10 +61,38 @@
           </div>
           <div class="row">
             <div class="col-25">
-              <label for="steamId">Steam Id</label>
+              <!-- one common ID format used for identifying users on steam, an online games platform -->
+              <label for="steam64Id">Steam64 Id</label>
             </div>
             <div class="col-75">
-              <input type="text" id="steamId" name="steamId" placeholder="Enter steam id">
+              <input type="text" id="steam64Id" name="steam64Id" placeholder="Enter steam64Id (76561198034955422 format)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <!-- an alternative ID format used for identifying users on steam, an online games platform -->
+              <label for="steam3Id">Steam3 Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="steam3Id" name="steam3Id" placeholder="Enter steam3Id ([U:1:74689694] format)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="classId">Preferred Class</label>
+            </div>
+            <div class="col-75">
+              <!-- user selects their preferred class -->
+              <select id="classId" name="classId">
+                <option value="Scout">Scout</option>
+                <option value="Soldier">Soldier</option>
+                <option value="Pyro">Pyro</option>
+                <option value="Demo">Demo</option>
+                <option value="Heavy">Heavy</option>
+                <option value="Medic">Medic</option>
+                <option value="Sniper">Sniper</option>
+                <option value="Spy">Spy</option>
+              </select>
             </div>
           </div>
           <div class="row">
@@ -98,12 +126,16 @@
             and them access them via js eventually -->
         <table id="user-stats">
           <!-- using html5 i can set the specific widths of each column in the subsequent table -->
-          <col style="width:40%">
-          <col style="width:40%">
+          <col style="width:20%">
+          <col style="width:20%">
+          <col style="width:20%">
+          <col style="width:20%">
           <col style="width:20%">
             <tr>
               <th><h2>Username</h2></th>
-              <th><h2>Steam ID</h2></th>
+              <th><h2>Steam64ID</h2></th>
+              <th><h2>Steam3ID</h2></th>
+              <th><h2>Preferred Class</h2></th>
               <th><h2>Is Admin?</h2></th>
             </tr>
         </table>

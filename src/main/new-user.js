@@ -3,6 +3,7 @@ const url = "http://localhost:8082/submit-user";
 function validateForm() {
     var missingFields = new Array();
     let errormsg = "";
+    let hasMiscError = false;
 
     // for every field in the form, get its value and check if it's empty
     // if it's empty, then add it to a list of missing fields
@@ -12,8 +13,27 @@ function validateForm() {
       missingFields.push("Username");
     }
     
-    let steamid = document.forms["addUserForm"]["steamId"].value;
-    if (steamid == "") {
+    let steam64Id = document.forms["addUserForm"]["steam64Id"].value;
+    if (steam64Id == "") 
+    {
+      missingFields.push("Steam ID");
+    }
+    if(/\D/.test(steam64Id))
+    {
+        console.log(typeof steam64Id)
+        alert("steam64Id must be a number");
+        hasMiscError = true;
+    }
+
+    let steam3Id = document.forms["addUserForm"]["steam3Id"].value;
+    if (steam3Id == "") {
+        // TO-DO: ADD MORE VALIDATION THAT IT'S THE RIGHT FORMAT
+      missingFields.push("Steam ID");
+    }
+
+    let classId = document.forms["addUserForm"]["classId"].value;
+    if (classId == "") {
+        // TO-DO: ADD MORE VALIDATION THAT IT'S THE RIGHT FORMAT
       missingFields.push("Steam ID");
     }
 
@@ -39,20 +59,16 @@ function validateForm() {
         alert("Missing the following fields: " + errormsg.toString())
         return false;
     }
+    else if(hasMiscError)
+    {
+        console.log("incorrect formatting for input, stats not submitted");
+    }
     else{
-        // if there are no missing fields, save the entered data and then send an alert
+        // if there are no missing fields or format errors, save the entered data and then send an alert
         saveStats();
         alert("Stats saved!");
     }
   } 
-
-//$("#addUserForm").submit(function(event){
-//    let request = {
-//
-//    }
-//
-//    }
-//)
 
 function saveStats(){
 
@@ -71,7 +87,9 @@ function saveStats(){
 
     toSaveDict = {
         username: toSave.username.value,
-        steamId: toSave.steamId.value,
+        steam64Id: toSave.steam64Id.value,
+        steam3Id: toSave.steam3Id.value,
+        classId: toSave.classId.value,
         isAdmin: toSave.isAdmin.value
         }
 
@@ -96,19 +114,21 @@ function saveStats(){
 
     // save the dict you've added the form stats to to local storage
     request = JSON.stringify(toSaveDict);
-    localStorage.setItem('users', request);
+    // localStorage.setItem('users', request);
 
     event.preventDefault();
-    console.log("about to try submitting users");
+    console.log("about to try submitting users w/ request");
+    console.log(request);
     fetch(url, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
-        body: JSON.stringify(request)})
+        body: JSON.stringify(toSaveDict)})
     .then(async response => {
         const isJson = response.headers.get('content-type')?.includes('application/json');
         const data = isJson ? await response.json() : null;
+        console.log(response)
 
-        if (!response.ok) {
+        if (response.status != 201) {
             return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
         }
         loadStats();
@@ -153,10 +173,10 @@ function displaySavedRows(table, loadedStats)
             row.appendChild(cUsername);
 
             // repeat for all of the saved stats
-            const cSteamId = document.createElement("td");
-            const cSteamIdText = document.createTextNode(loadedStats.steamId[i]);
-            cSteamId.appendChild(cSteamIdText);
-            row.appendChild(cSteamId);
+            const csteam3Id = document.createElement("td");
+            const csteam3IdText = document.createTextNode(loadedStats.steam3Id[i]);
+            csteam3Id.appendChild(csteam3IdText);
+            row.appendChild(csteam3Id);
 
             const cIsAdmin = document.createElement("td");
             const cIsAdminText = document.createTextNode(loadedStats.isAdmin[i]);
