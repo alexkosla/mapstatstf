@@ -4,44 +4,54 @@ function validateForm() {
 
     // for every field in the form, get its value and check if it's empty
     // if it's empty, then add it to a list of missing fields
-    let username = document.forms["fstats"]["username"].value;
-    if (username == "") {
-      missingFields.push("Username");
-    }
-    
-    let steamid = document.forms["fstats"]["steamId"].value;
-    if (steamid == "") {
+    let steam64ID = document.forms["addStatsForm"]["steam64ID"].value;
+    if (steam64ID == "") {
       missingFields.push("Steam ID");
     }
     
-    let logid = document.forms["fstats"]["logId"].value;
+    let logid = document.forms["addStatsForm"]["logId"].value;
     if (logid == "") {
       missingFields.push("Log ID");
     }
     
-    let map = document.forms["fstats"]["map"].value;
+    let map = document.forms["addStatsForm"]["map"].value;
     if (map == "") {
       missingFields.push("Map");
     }
 
-    let classname = document.forms["fstats"]["class"].value;
+    let classname = document.forms["addStatsForm"]["class"].value;
     if (classname == "") {
       missingFields.push("Class");
     }
 
-    let killcount = document.forms["fstats"]["killcount"].value;
+    let killcount = document.forms["addStatsForm"]["killcount"].value;
     if (killcount == "") {
       missingFields.push("Kills");
     }
 
-    let deathcount = document.forms["fstats"]["deathcount"].value;
+    let assistcount = document.forms["addStatsForm"]["assistcount"].value;
+    if (assistcount == "") {
+      missingFields.push("Assists");
+    }
+
+    let deathcount = document.forms["addStatsForm"]["deathcount"].value;
     if (deathcount == "") {
       missingFields.push("Deaths");
     }
 
-    let damage = document.forms["fstats"]["damage"].value;
+    let damage = document.forms["addStatsForm"]["damage"].value;
     if (damage == "") {
       missingFields.push("Damage");
+    }
+
+    let damageTaken = document.forms["addStatsForm"]["damageTaken"].value;
+    if (damageTaken == "") {
+      missingFields.push("Damage Taken");
+    }
+
+    let seconds = document.forms["addStatsForm"]["seconds"].value;
+    if (seconds == "") {
+      missingFields.push("Seconds");
     }
 
     // for all of the missing fields noted, make a string list of them that will
@@ -76,7 +86,7 @@ function validateForm() {
 function saveStats(){
 
     // get all of the stats from the form
-    var toSave = document.forms["fstats"];
+    var toSave = document.forms["addStatsForm"];
 
     // try to load any saved states and parse them as a dict
     var loadedStats = JSON.parse(localStorage.getItem('stats'));
@@ -86,28 +96,32 @@ function saveStats(){
     if(loadedStats != null)
     {
         toSaveDict = loadedStats;
-        toSaveDict.username.push(toSave.username.value);
-        toSaveDict.steamId.push(toSave.steamId.value);
+        toSaveDict.steam64ID.push(toSave.steam64ID.value);
         toSaveDict.logId.push(toSave.logId.value);
         toSaveDict.map.push(toSave.map.value);
         toSaveDict.class.push(toSave.class.value);
         toSaveDict.kills.push(toSave.killcount.value);
+        toSaveDict.assists.push(toSave.assistcount.value);
         toSaveDict.deaths.push(toSave.deathcount.value);
         toSaveDict.damage.push(toSave.damage.value);
+        toSaveDict.damageTaken.push(toSave.damageTaken.value);
+        toSaveDict.seconds.push(toSave.seconds.value);
     }
     else
     {
         // if there aren't any stats saved in localStorage, then create a new
         // dict of arrays to hold the stats
         toSaveDict = {
-            username: [toSave.username.value],
-            steamId: [toSave.steamId.value],
             logId: [toSave.logId.value],
+            steam64ID: [toSave.steam64ID.value],
             map: [toSave.map.value],
             class: [toSave.class.value],
             kills: [toSave.killcount.value],
+            assists: [toSave.assistcount.value],
             deaths: [toSave.deathcount.value],
-            damage: [toSave.damage.value]
+            damage: [toSave.damage.value],
+            damageTaken: [toSave.damageTaken.value],
+            seconds: [toSave.seconds.value],
         }
     }
 
@@ -121,7 +135,7 @@ function displaySavedRows(table, loadedStats)
     // check if there are any stats loaded from local storage
     if(loadedStats)
     {
-        count = loadedStats.username.length;
+        count = loadedStats.logId.length;
         for (let i = 0; i < count; i++)
         {
             // if the table has data rows in it, 
@@ -139,23 +153,18 @@ function displaySavedRows(table, loadedStats)
         {
             const row = document.createElement("tr");
 
-            // create a cell in the row for the username, set the text to be loaded text
+            // create a cell in the row for the logId, set the text to be loaded text
             // and then add it to the row
-            const cUsername = document.createElement("td");
-            const cUsernameText = document.createTextNode(loadedStats.username[i]);
-            cUsername.appendChild(cUsernameText);
-            row.appendChild(cUsername);
-
-            // repeat for all of the saved stats
-            const cSteamId = document.createElement("td");
-            const cSteamIdText = document.createTextNode(loadedStats.steamId[i]);
-            cSteamId.appendChild(cSteamIdText);
-            row.appendChild(cSteamId);
-
             const cLogId = document.createElement("td");
             const cLogIdText = document.createTextNode(loadedStats.logId[i]);
             cLogId.appendChild(cLogIdText);
             row.appendChild(cLogId);
+
+            // repeat for all of the saved stats
+            const csteam64ID = document.createElement("td");
+            const csteam64IDText = document.createTextNode(loadedStats.steam64ID[i]);
+            csteam64ID.appendChild(csteam64IDText);
+            row.appendChild(csteam64ID);
 
             const cMap = document.createElement("td");
             const cMapText = document.createTextNode(loadedStats.map[i]);
@@ -172,6 +181,11 @@ function displaySavedRows(table, loadedStats)
             cKills.appendChild(cKillText);
             row.appendChild(cKills);
 
+            const cAssists = document.createElement("td");
+            const cAssistsText = document.createTextNode(loadedStats.assists[i]);
+            cAssists.appendChild(cAssistsText);
+            row.appendChild(cAssists);
+
             const cDeaths = document.createElement("td");
             const cDeathsText = document.createTextNode(loadedStats.deaths[i]);
             cDeaths.appendChild(cDeathsText);
@@ -181,6 +195,16 @@ function displaySavedRows(table, loadedStats)
             const cDamageText = document.createTextNode(loadedStats.damage[i]);
             cDamage.appendChild(cDamageText);
             row.appendChild(cDamage);
+
+            const cDamageTaken = document.createElement("td");
+            const cDamageTakenText = document.createTextNode(loadedStats.damageTaken[i]);
+            cDamageTaken.appendChild(cDamageTakenText);
+            row.appendChild(cDamageTaken);
+
+            const cSeconds = document.createElement("td");
+            const cSecondsText = document.createTextNode(loadedStats.seconds[i]);
+            cSeconds.appendChild(cSecondsText);
+            row.appendChild(cSeconds);
 
             // finally once we're done adding cells onto the row, we append the row onto the table
             table.append(row);

@@ -41,21 +41,13 @@
       </h1>
       <div class="container">
           <!-- https://www.w3schools.com/js/js_validation.asp -->
-        <form id="fstats" method="post">
+        <form id="addStatsForm" method="post">
           <div class="row">
             <div class="col-25">
-              <label for="username">Username</label>
+              <label for="steam64ID">Steam 64 Id</label>
             </div>
             <div class="col-75">
-              <input type="text" id="username" name="username" placeholder="Enter username">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-25">
-              <label for="steamId">Steam Id</label>
-            </div>
-            <div class="col-75">
-              <input type="text" id="steamId" name="steamId" placeholder="Enter steam id">
+              <input type="text" id="steam64ID" name="steam64ID" placeholder="Enter steam64 id">
             </div>
           </div>
           <div class="row">
@@ -72,13 +64,13 @@
             </div>
             <div class="col-75">
               <select id="map" name="map">
-                <option value="Upward">Upward</option>
-                <option value="Swiftwater">Swiftwater</option>
-                <option value="Vigil">Vigil</option>
-                <option value="Steel">Steel</option>
-                <option value="Product">Product</option>
-                <option value="Ashville">Ashville</option>
-                <option value="Proot">Proot</option>
+                <option value="0">Steel</option>
+                <option value="1">Ashville</option>
+                <option value="2">Product</option>
+                <option value="3">Proot</option>
+                <option value="4">Swiftwater</option>
+                <option value="5">Upward</option>
+                <option value="6">Vigil</option>
               </select>
             </div>
           </div>
@@ -89,9 +81,10 @@
             <div class="col-75">
               <select id="class" name="class">
                 <option value="Scout">Scout</option>
-                <option value="Spy">Spy</option>
+                <option value="Demo">Demo</option>
+                <option value="Heavy">Heavy</option>
                 <option value="Sniper">Sniper</option>
-                <option value="Medic">Medic</option>
+                <option value="Spy">Spy</option>
               </select>
             </div>
           </div>
@@ -101,6 +94,14 @@
             </div>
             <div class="col-75">
               <input type="text" id="killcount" name="killcount" placeholder="Enter number of kills">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="assistcount">Assists</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="assistcount" name="assistcount" placeholder="Enter number of assists">
             </div>
           </div>
           <div class="row">
@@ -116,7 +117,23 @@
               <label for="damage">Damage</label>
             </div>
             <div class="col-75">
-              <input type="text" id="damage" name="damage" placeholder="Enter total amount of damage">
+              <input type="text" id="damage" name="damage" placeholder="Enter total amount of damage dealt">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="damageTaken">Damage Taken</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="damageTaken" name="damageTaken" placeholder="Enter total amount of damage taken">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="seconds">Seconds Played</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="seconds" name="seconds" placeholder="Enter total amount of seconds the player played">
             </div>
           </div>
           <div class="row">
