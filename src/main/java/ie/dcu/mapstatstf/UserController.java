@@ -7,11 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class TestController {
+public class UserController {
 
     private final UserService service;
 
-    public TestController(UserService service)
+    public UserController(UserService service)
     {
         this.service = service;
     }
@@ -22,7 +22,6 @@ public class TestController {
     {
         return "hello you are in the test controller";
     }
-
 
     @PostMapping("/submit-user")
     @CrossOrigin(origins ="*")

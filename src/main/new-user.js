@@ -1,4 +1,4 @@
-const url = "http://localhost:8082/submit-user";
+const url = "http://localhost:8080/submit-user";
 
 function validateForm() {
     var missingFields = new Array();
@@ -91,7 +91,7 @@ function saveStats(){
         steam3Id: toSave.steam3Id.value,
         classId: toSave.classId.value,
         isAdmin: toSave.isAdmin.value
-        }
+    }
 
     // if there are stats in localStorage, append the ones from the form onto them
 //    if(loadedStats != null)

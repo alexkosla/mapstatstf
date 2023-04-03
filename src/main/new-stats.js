@@ -1,3 +1,5 @@
+const url = "http://localhost:8080/submit-stats";
+
 function validateForm() {
     var missingFields = new Array();
     let errormsg = "";
@@ -93,41 +95,65 @@ function saveStats(){
     let toSaveDict = {};
 
     // if there are stats in localStorage, append the ones from the form onto them
-    if(loadedStats != null)
-    {
-        toSaveDict = loadedStats;
-        toSaveDict.steam64ID.push(toSave.steam64ID.value);
-        toSaveDict.logId.push(toSave.logId.value);
-        toSaveDict.map.push(toSave.map.value);
-        toSaveDict.class.push(toSave.class.value);
-        toSaveDict.kills.push(toSave.killcount.value);
-        toSaveDict.assists.push(toSave.assistcount.value);
-        toSaveDict.deaths.push(toSave.deathcount.value);
-        toSaveDict.damage.push(toSave.damage.value);
-        toSaveDict.damageTaken.push(toSave.damageTaken.value);
-        toSaveDict.seconds.push(toSave.seconds.value);
-    }
-    else
-    {
-        // if there aren't any stats saved in localStorage, then create a new
-        // dict of arrays to hold the stats
+    // if(loadedStats != null)
+    // {
+    //     toSaveDict = loadedStats;
+    //     toSaveDict.steam64ID.push(toSave.steam64ID.value);
+    //     toSaveDict.logId.push(toSave.logId.value);
+    //     toSaveDict.map.push(toSave.map.value);
+    //     toSaveDict.class.push(toSave.class.value);
+    //     toSaveDict.kills.push(toSave.killcount.value);
+    //     toSaveDict.assists.push(toSave.assistcount.value);
+    //     toSaveDict.deaths.push(toSave.deathcount.value);
+    //     toSaveDict.damage.push(toSave.damage.value);
+    //     toSaveDict.damageTaken.push(toSave.damageTaken.value);
+    //     toSaveDict.seconds.push(toSave.seconds.value);
+    // }
+    // else
+    // {
+    //     // if there aren't any stats saved in localStorage, then create a new
+    //     // dict of arrays to hold the stats
         toSaveDict = {
-            logId: [toSave.logId.value],
-            steam64ID: [toSave.steam64ID.value],
-            map: [toSave.map.value],
-            class: [toSave.class.value],
-            kills: [toSave.killcount.value],
-            assists: [toSave.assistcount.value],
-            deaths: [toSave.deathcount.value],
-            damage: [toSave.damage.value],
-            damageTaken: [toSave.damageTaken.value],
-            seconds: [toSave.seconds.value],
+            logId: toSave.logId.value,
+            steam64Id: toSave.steam64ID.value,
+            mapId: toSave.map.value,
+            className: toSave.class.value,
+            kills: toSave.killcount.value,
+            assists: toSave.assistcount.value,
+            deaths: toSave.deathcount.value,
+            damage: toSave.damage.value,
+            damageTaken: toSave.damageTaken.value,
+            seconds: toSave.seconds.value
         }
-    }
+    // }
 
     // save the dict you've added the form stats to to local storage
     localStorage.setItem('stats', JSON.stringify(toSaveDict));
-    loadStats();
+    request = JSON.stringify(toSaveDict);
+    // localStorage.setItem('users', request);
+
+    event.preventDefault();
+    console.log("about to try submitting users w/ request");
+    console.log(request);
+    fetch(url, {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(toSaveDict)})
+    .then(async response => {
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await response.json() : null;
+        console.log(response)
+
+        if (response.status != 201) {
+            return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
+        }
+        loadStats();
+    })
+    .catch(error => {
+        alert('There was an error!\n' +  error.message);
+    }).finally(() => {
+         $('.form-popup').hide();
+    });
 }
 
 function displaySavedRows(table, loadedStats)
