@@ -1,7 +1,10 @@
 # mapstatstf
 
 The way I ran this program locally was via IntelliJ, my IDE.
-Load the project into IntelliJ (https://www.jetbrains.com/idea/download)
+Load the project into IntelliJ (https://www.jetbrains.com/idea/download).
+To do so, unzip the project folder (mapstatstf) and open it up.
+![image](https://user-images.githubusercontent.com/33711919/229609649-9ad8f789-fe78-470f-9c6d-9e023106a410.png)
+
 
 For the back-end create a new maven configuration matching this image
 ![image](https://user-images.githubusercontent.com/33711919/229597270-3073e524-7ba0-4ec8-b3c7-202152a9c21f.png)
