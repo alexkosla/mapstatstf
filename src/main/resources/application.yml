@@ -1,5 +1,5 @@
 server:
 #  POST uses port 8080
-#  port: 8080
+  port: 8080
 #  GET uses port 8081
-  port: 8081
+#  port: 8081

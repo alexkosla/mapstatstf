@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ie.dcu</groupId>
 	<artifactId>mapstatstf</artifactId>
-	<version>q3-4</version>
+	<version>q2</version>
 	<packaging>war</packaging>
 	<name>mapstatstf</name>
 	<description>Demo project for Spring Boot</description>

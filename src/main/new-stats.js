@@ -1,4 +1,4 @@
-const url = "http://localhost:8081/submit-stats";
+const url = "http://localhost:8080/submit-stats";
 
 function validateForm() {
     var missingFields = new Array();
@@ -10,10 +10,20 @@ function validateForm() {
     if (steam64ID == "") {
       missingFields.push("Steam ID");
     }
+    if(/\D/.test(steam64Id) || steam64Id < 0)
+    {
+        alert("steam64Id must be a positive number");
+        hasMiscError = true;
+    }
     
     let logid = document.forms["addStatsForm"]["logId"].value;
     if (logid == "") {
       missingFields.push("Log ID");
+    }
+    if(/\D/.test(logid) || logid < 0)
+    {
+        alert("logid must be a positive number");
+        hasMiscError = true;
     }
     
     let map = document.forms["addStatsForm"]["map"].value;
@@ -30,30 +40,60 @@ function validateForm() {
     if (killcount == "") {
       missingFields.push("Kills");
     }
+    if(killcount < 0)
+    {
+        alert("killcount must be a positive number");
+        hasMiscError = true;
+    }
 
     let assistcount = document.forms["addStatsForm"]["assistcount"].value;
     if (assistcount == "") {
       missingFields.push("Assists");
+    }
+    if(assistcount < 0)
+    {
+        alert("assistcount must be a positive number");
+        hasMiscError = true;
     }
 
     let deathcount = document.forms["addStatsForm"]["deathcount"].value;
     if (deathcount == "") {
       missingFields.push("Deaths");
     }
+    if(deathcount < 0)
+    {
+        alert("deathcount must be a positive number");
+        hasMiscError = true;
+    }
 
     let damage = document.forms["addStatsForm"]["damage"].value;
     if (damage == "") {
       missingFields.push("Damage");
+    }
+    if(damage < 0)
+    {
+        alert("damage must be a positive number");
+        hasMiscError = true;
     }
 
     let damageTaken = document.forms["addStatsForm"]["damageTaken"].value;
     if (damageTaken == "") {
       missingFields.push("Damage Taken");
     }
+    if(damageTaken < 0)
+    {
+        alert("damageTaken must be a positive number");
+        hasMiscError = true;
+    }
 
     let seconds = document.forms["addStatsForm"]["seconds"].value;
     if (seconds == "") {
       missingFields.push("Seconds");
+    }
+    if(seconds < 0)
+    {
+        alert("seconds must be a positive number");
+        hasMiscError = true;
     }
 
     // for all of the missing fields noted, make a string list of them that will
@@ -118,7 +158,6 @@ function saveStats(){
     .then(async response => {
         const isJson = response.headers.get('content-type')?.includes('application/json');
         const data = isJson ? await response.json() : null;
-        console.log(response)
 
         if (response.status != 201) {
             return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
@@ -160,7 +199,6 @@ function displaySavedRows(table, data)
             const csteam64ID = document.createElement("td");
             const csteam64IDText = document.createTextNode(data[i].steam64Id);
             csteam64ID.addEventListener('click', function handleClick(event) {
-              console.log('element clicked 🎉🎉🎉', event);
               loadUserStats(data[i].steam64Id);
             });
 
@@ -336,8 +374,6 @@ function fetchStats(){
 }
 
 function loadUserStats(steam64Id){
-  console.log("in loadUserStats");
-  console.log(steam64Id);
   const table = document.getElementById('joined-stats');
 
   const url = "http://localhost:8081/stats-ID?steam64Id=" + steam64Id;

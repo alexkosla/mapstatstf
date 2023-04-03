@@ -1,7 +1,7 @@
 // localhost port for development
-// url = "http://localhost:8081/submit-user";
+url = "http://localhost:8080/submit-user";
 // example of url used with tomcat
-url = "http://localhost:8087/mapstatstf-q3-4/submit-user";
+// url = "http://localhost:8087/mapstatstf-q3-4/submit-user";
 
 function validateForm() {
     var missingFields = new Array();
@@ -10,7 +10,6 @@ function validateForm() {
 
     // for every field in the form, get its value and check if it's empty
     // if it's empty, then add it to a list of missing fields
-    // debugger
     let username = document.forms["addUserForm"]["username"].value;
     if (username == "") {
       missingFields.push("Username");
@@ -21,22 +20,19 @@ function validateForm() {
     {
       missingFields.push("Steam ID");
     }
-    if(/\D/.test(steam64Id))
+    if(/\D/.test(steam64Id) || steam64Id < 0)
     {
-        console.log(typeof steam64Id)
-        alert("steam64Id must be a number");
+        alert("steam64Id must be a positive number");
         hasMiscError = true;
     }
 
     let steam3Id = document.forms["addUserForm"]["steam3Id"].value;
     if (steam3Id == "") {
-        // TO-DO: ADD MORE VALIDATION THAT IT'S THE RIGHT FORMAT
       missingFields.push("Steam ID");
     }
 
     let preferredClass = document.forms["addUserForm"]["preferredClass"].value;
     if (preferredClass == "") {
-        // TO-DO: ADD MORE VALIDATION THAT IT'S THE RIGHT FORMAT
       missingFields.push("Steam ID");
     }
 
@@ -64,7 +60,7 @@ function validateForm() {
     }
     else if(hasMiscError)
     {
-        console.log("incorrect formatting for input, stats not submitted");
+        alert("incorrect formatting for input, stats not submitted");
     }
     else{
         // if there are no missing fields or format errors, save the entered data and then send an alert
@@ -75,6 +71,7 @@ function validateForm() {
 
 function saveStats(){
 
+    const table = document.getElementById('user-stats');
     // get all of the stats from the form
     var toSave = document.forms["addUserForm"];
 
@@ -100,8 +97,6 @@ function saveStats(){
     request = JSON.stringify(toSaveDict);
 
     event.preventDefault();
-    console.log("about to try submitting users w/ request");
-    console.log(request);
     fetch(url, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
@@ -109,12 +104,14 @@ function saveStats(){
     .then(async response => {
         const isJson = response.headers.get('content-type')?.includes('application/json');
         const data = isJson ? await response.json() : null;
-        console.log(response)
 
         if (response.status != 201) {
             return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
         }
-        fetchUsers();
+        else
+        {
+            displaySavedRows(table, data);
+        }
     })
     .catch(error => {
         alert('There was an error!\n' +  error.message);
