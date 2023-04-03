@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/submit-user";
+const url = "http://localhost:8081/submit-user";
 
 function validateForm() {
     var missingFields = new Array();
@@ -80,17 +80,17 @@ function saveStats(){
     let toSaveDict = {};
 
     // format the output of the isAdmin checkbox to be a capitalized bool
-    if(toSave.isAdmin.checked)
-        toSave.isAdmin.value = "true";
+    if(toSave.admin.checked)
+        toSave.admin.value = true;
     else
-        toSave.isAdmin.value = "false";
+        toSave.admin.value = false;
 
     toSaveDict = {
         username: toSave.username.value,
         steam64Id: toSave.steam64Id.value,
         steam3Id: toSave.steam3Id.value,
         preferredClass: toSave.preferredClass.value,
-        isAdmin: toSave.isAdmin.value
+        admin: toSave.admin.value
     }
 
     // save the dict you've added the form stats to to local storage
@@ -111,7 +111,7 @@ function saveStats(){
         if (response.status != 201) {
             return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
         }
-        loadStats();
+        fetchUsers();
     })
     .catch(error => {
         alert('There was an error!\n' +  error.message);
@@ -122,16 +122,16 @@ function saveStats(){
 //    return JSON.stringify(toSaveDict);
 }
 
-function displaySavedRows(table, loadedStats)
+function displaySavedRows(table, data)
 {
     // check if there are any stats loaded from local storage
-    if(loadedStats)
+    if(data)
     {
-        count = loadedStats.username.length;
+        count = data.length;
         for (let i = 0; i < count; i++)
         {
             // if the table has data rows in it, 
-            // for every entry loaded in from localstorage, delete the first data row
+            // for every entry loaded in from the back-end, delete the first data row
             // table row 0 is the header, so we don't want to delete that
             // this will incrementally delete all previously loaded entries in the table
             if(table.rows.length > 1)
@@ -148,20 +148,30 @@ function displaySavedRows(table, loadedStats)
             // create a cell in the row for the username, set the text to be loaded text
             // and then add it to the row
             const cUsername = document.createElement("td");
-            const cUsernameText = document.createTextNode(loadedStats.username[i]);
+            const cUsernameText = document.createTextNode(data[i].username);
             cUsername.appendChild(cUsernameText);
             row.appendChild(cUsername);
 
             // repeat for all of the saved stats
+            const cSteam64Id = document.createElement("td");
+            const cSteam64IdText = document.createTextNode(data[i].steam64Id);
+            cSteam64Id.appendChild(cSteam64IdText);
+            row.appendChild(cSteam64Id);
+
             const csteam3Id = document.createElement("td");
-            const csteam3IdText = document.createTextNode(loadedStats.steam3Id[i]);
+            const csteam3IdText = document.createTextNode(data[i].steam3Id);
             csteam3Id.appendChild(csteam3IdText);
             row.appendChild(csteam3Id);
 
-            const cIsAdmin = document.createElement("td");
-            const cIsAdminText = document.createTextNode(loadedStats.isAdmin[i]);
-            cIsAdmin.appendChild(cIsAdminText);
-            row.appendChild(cIsAdmin);
+            const cPrefClass = document.createElement("td");
+            const cPrefClassText = document.createTextNode(data[i].preferredClass);
+            cPrefClass.appendChild(cPrefClassText);
+            row.appendChild(cPrefClass);
+
+            const cadmin = document.createElement("td");
+            const cadminText = document.createTextNode(data[i].admin);
+            cadmin.appendChild(cadminText);
+            row.appendChild(cadmin);
 
             // finally once we're done adding cells onto the row, we append the row onto the table
             table.append(row);
@@ -174,10 +184,19 @@ function displaySavedRows(table, loadedStats)
 
 }
 
-function loadStats(){
-    // load the table and locally stored stats and pass them to a function that will display the data
+function fetchUsers(){
     const table = document.getElementById('user-stats');
-    var loadedStats = JSON.parse(localStorage.getItem('users'));
 
-    displaySavedRows(table, loadedStats);
+    const url = "http://localhost:8081/users";
+    fetch(url, {
+        method: "GET",
+        headers: {"Content-type": "application/json"}
+    })
+    .then(response => response.json())
+    .then(data => {
+        displaySavedRows(table, data);
+    })
+    .catch((error) => {
+        window.alert(error);
+    });
 }

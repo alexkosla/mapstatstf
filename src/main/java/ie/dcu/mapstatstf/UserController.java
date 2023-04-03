@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 // define the class as a controller for a REST api
 @RestController
 public class UserController {
@@ -33,5 +35,14 @@ public class UserController {
         service.addUser(user);
         // return a success code
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
+    }
+
+    // GET endpoint for returning list of all users
+    @GetMapping("/users")
+    @CrossOrigin(origins ="*")
+    public ResponseEntity<List<UserModel>> getUsers()
+    {
+        // put business logic in the service, out of the controller
+        return ResponseEntity.ok(service.listUsers());
     }
 }

@@ -14,8 +14,8 @@ public class UserModel {
     // name of the user's preferred class in the game of tf2
     private String preferredClass;
 
-    // true if user is an admin
-    private boolean isAdmin;
+    // true if user is an admin, false otherwise
+    private boolean admin;
 
     public long getSteam64Id() {
         return steam64Id;
@@ -50,10 +50,10 @@ public class UserModel {
     }
 
     public boolean isAdmin() {
-        return isAdmin;
+        return admin;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.admin = isAdmin;
     }
 }

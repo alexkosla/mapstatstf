@@ -97,14 +97,14 @@
           </div>
           <div class="row">
             <div class="col-25">
-                <label for="isAdmin">Is Admin?</label>
+                <label for="admin">Is Admin?</label>
             </div>
             <div class="col-75">
               <!-- use the switch class for styling
                   use the checkbox type of input (but the display will be changed from vanilla, see css
                   id and name fields set for DOM and form control access -->
                 <label class="switch">
-                    <input type="checkbox" id="isAdmin" name="isAdmin">
+                    <input type="checkbox" id="admin" name="admin">
                     <span class="slider round"></span>
                 </label>
             </div>
@@ -114,7 +114,7 @@
                 the left one loads stats by calling loadStats()
                 the right one submits stats by first calling validateForm() -->
             <button class="btn-load" type="button" style="float: left" 
-                id="btn-load" onclick="loadStats()">Load Stats</button>
+                id="btn-load" onclick="fetchUsers()">Load Stats</button>
             <button class="btn-submit" type="button" style="float: right;"
                 id="btn-submit" onclick="validateForm()">Submit</button>
           </div>

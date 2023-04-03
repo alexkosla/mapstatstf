@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/submit-stats";
+const url = "http://localhost:8081/submit-stats";
 
 function validateForm() {
     var missingFields = new Array();
