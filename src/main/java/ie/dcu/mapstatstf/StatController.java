@@ -35,10 +35,20 @@ public class StatController {
         return ResponseEntity.ok(service.listStats());
     }
 
+    // GET endpoint for returning list of all users
+    @GetMapping("/stats-ID")
+    @CrossOrigin(origins ="*")
+    public ResponseEntity<List<UserStatEntity>> getStatsById(@RequestParam long steam64Id)
+    {
+        // put business logic in the service, out of the controller
+        // returns a list of all stats saved with an ok message
+        return ResponseEntity.ok(service.listUserStats(steam64Id));
+    }
+
     // POST endpoint to submit a new stat entry
     @PostMapping("/submit-stats")
     @CrossOrigin(origins ="*")
-    public ResponseEntity<Void> submitUser(@RequestBody StatModel stat)
+    public ResponseEntity<Void> submitStat(@RequestBody StatModel stat)
     {
         // keep business logic out of the controller, use the service for that
         service.addStat(stat);

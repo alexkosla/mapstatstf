@@ -118,8 +118,6 @@ function saveStats(){
     }).finally(() => {
          $('.form-popup').hide();
     });
-
-//    return JSON.stringify(toSaveDict);
 }
 
 function displaySavedRows(table, data)

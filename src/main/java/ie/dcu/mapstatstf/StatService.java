@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StatService {
@@ -30,6 +31,84 @@ public class StatService {
                 ArrayList<StatModel> statList = new ArrayList<StatModel>(Arrays.asList(mapper.readValue(f, StatModel[].class)));
                 // add the new stat entry onto the list
                 return statList;
+            }
+
+        } catch (Exception ex)
+        {
+            // print the stack trace in case there's an error here reading/writing to file
+            ex.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    // function returns a list of all users saved
+    public List<UserStatEntity> listUserStats(long steam64Id)
+    {
+        ArrayList<StatModel> statList = null;
+        ArrayList<UserModel> userList = null;
+        ArrayList<UserStatEntity> userStatEntities = new ArrayList<UserStatEntity>();
+        try{
+            // set the relative path of the location of the json file
+            String fileLocation = "./src/main/resources/stats.json";
+            // create a jackson object mapper to use for converting an object to a json file
+            ObjectMapper mapper = new ObjectMapper();
+            // tell the mapper to parse a single value as an array to avoid errors
+            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+
+            // check if the file already exists at the location specified
+            File f = new File(fileLocation);
+            if(f.isFile()) {
+                // if the file does exist, use the mapper to read the value and parse it as an arraylist
+                statList = new ArrayList<StatModel>(Arrays.asList(mapper.readValue(f, StatModel[].class)));
+                // add the new stat entry onto the list
+            }
+
+            if(statList != null)
+            {
+                // set the relative path of the location of the users json file
+                fileLocation = "./src/main/resources/users.json";
+
+                // check if the file already exists at the location specified
+                f = new File(fileLocation);
+                if(f.isFile()) {
+                    // if the file does exist, use the mapper to read the value and parse it as an arraylist
+                    userList = new ArrayList<UserModel>(Arrays.asList(mapper.readValue(f, UserModel[].class)));
+                }
+
+                if(userList != null)
+                {
+                    // https://stackoverflow.com/questions/19396944/what-is-the-java-equivalent-for-enumerable-select-with-lambdas-in-c
+//                    userList.stream().map(usr -> usr.getSteam64Id()).collect(Collectors.toList());
+                    // will return a list of length 1 because we've enforced steam64Id to be unique
+                    List<UserModel> filteredUsers = userList.stream()
+                            .filter(usr ->  usr.getSteam64Id() == steam64Id)
+                            .collect(Collectors.toList());
+                    UserModel user = filteredUsers.get(0);
+
+                    for(int i = 0; i < statList.size(); i++)
+                    {
+                        // create an empty userStatEntity to fill manually
+                        UserStatEntity userStat = new UserStatEntity();
+                        // iterate through the statList
+                        StatModel currStat = statList.get(i);
+
+                        // manually set all the fields of userStatEntity using data from both UserModel and StatModel
+                        userStat.setLogId(currStat.getLogId());
+                        userStat.setUsername(user.getUsername());
+                        userStat.setPreferredClass(user.getPreferredClass());
+                        userStat.setMapId(currStat.getMapId());
+                        userStat.setClassName(currStat.getClassName());
+                        userStat.setKills(currStat.getKills());
+                        userStat.setAssists(currStat.getAssists());
+                        userStat.setDeaths(currStat.getDeaths());
+                        userStat.setDamage(currStat.getDamage());
+                        userStat.setDamageTaken(currStat.getDamageTaken());
+                        userStat.setSeconds(currStat.getSeconds());
+
+                        userStatEntities.add(userStat);
+                    }
+                    return userStatEntities;
+                }
             }
 
         } catch (Exception ex)
