@@ -31,8 +31,8 @@ function validateForm() {
       missingFields.push("Steam ID");
     }
 
-    let classId = document.forms["addUserForm"]["classId"].value;
-    if (classId == "") {
+    let preferredClass = document.forms["addUserForm"]["preferredClass"].value;
+    if (preferredClass == "") {
         // TO-DO: ADD MORE VALIDATION THAT IT'S THE RIGHT FORMAT
       missingFields.push("Steam ID");
     }
@@ -81,40 +81,20 @@ function saveStats(){
 
     // format the output of the isAdmin checkbox to be a capitalized bool
     if(toSave.isAdmin.checked)
-        toSave.isAdmin.value = "True";
+        toSave.isAdmin.value = "true";
     else
-        toSave.isAdmin.value = "False";
+        toSave.isAdmin.value = "false";
 
     toSaveDict = {
         username: toSave.username.value,
         steam64Id: toSave.steam64Id.value,
         steam3Id: toSave.steam3Id.value,
-        classId: toSave.classId.value,
+        preferredClass: toSave.preferredClass.value,
         isAdmin: toSave.isAdmin.value
     }
 
-    // if there are stats in localStorage, append the ones from the form onto them
-//    if(loadedStats != null)
-//    {
-//        toSaveDict = loadedStats;
-//        toSaveDict.username.push(toSave.username.value);
-//        toSaveDict.steamId.push(toSave.steamId.value);
-//        toSaveDict.isAdmin.push(toSave.isAdmin.value);
-//    }
-//    else
-//    {
-        // if there aren't any stats saved in localStorage, then create a new
-        // dict of arrays to hold the stats
-//        toSaveDict = {
-//            username: [toSave.username.value],
-//            steamId: [toSave.steamId.value],
-//            isAdmin: [toSave.isAdmin.value]
-//        }
-//    }
-
     // save the dict you've added the form stats to to local storage
     request = JSON.stringify(toSaveDict);
-    // localStorage.setItem('users', request);
 
     event.preventDefault();
     console.log("about to try submitting users w/ request");

@@ -5,19 +5,40 @@ import java.util.UUID;
 
 public class StatModel {
 
+    // primary key of statId, for easy GET calls rather than needing to specify both logId and steam64Id
     private UUID statId;
+
+    // id of the match in the logs.tf database, for eventual integration with logs.tf API
     private long logId;
+
+    // long to store the 64-bit steamId number
+    // foreign key to user table
+    // used by various apis integrated with a popular gaming service called steam
     private long steam64Id;
 
+    // Id of the map in map table of database
+    // foreign key to map table
     private int mapId;
 
+    // name of the team fortress 2 class played in the match
     private String className;
 
+    // # of kills the player had in the match
     private int kills;
+
+    // # of assists the player had in the match
     private int assists;
+
+    // # of deaths the player had in the match
     private int deaths;
+
+    // # of damage the player dealt in the match
     private int damage;
+
+    // # of damage the player received in the match
     private int damageTaken;
+
+    // length the player played in the match in seconds
     private int seconds;
 
     public UUID getStatId() {

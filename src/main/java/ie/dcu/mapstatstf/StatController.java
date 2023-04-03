@@ -1,7 +1,5 @@
 package ie.dcu.mapstatstf;
 
-//import jakarta.validation.Valid;
-//import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class StatController {
 
+    // create an instance of the StatService, where business logic is performed
     private final StatService service;
 
     public StatController(StatService service)
@@ -16,6 +15,7 @@ public class StatController {
         this.service = service;
     }
 
+    // safe test endpoint to see if my back-end is working
     @GetMapping("/test-stat")
     @CrossOrigin(origins ="*")
     public String HelloStat()
@@ -23,11 +23,14 @@ public class StatController {
         return "hello you are in the stat controller";
     }
 
+    // POST endpoint to submit a new stat entry
     @PostMapping("/submit-stats")
     @CrossOrigin(origins ="*")
     public ResponseEntity<Void> submitUser(@RequestBody StatModel stat)
     {
+        // keep business logic out of the controller, use the service for that
         service.addStat(stat);
+        // return success code
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).build();
     }
 }

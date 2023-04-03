@@ -1,37 +1,48 @@
 package ie.dcu.mapstatstf;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 @Service
 public class UserService {
-    private Map<String, UserModel> users = new HashMap<>();
+    // default constructor
     public UserService() {
     }
 
-    public UserModel createUser(String username, String steamId, boolean isAdmin)
-    {
-        UserModel user = new UserModel();
-        user.setSteam3Id(steamId);
-        user.setUsername(username);
-        user.setAdmin(isAdmin);
-        return user;
-    }
-
+    // saves/appends a user's info to a file
     public UserModel addUser(UserModel user)
     {
+        // create a unique identifier for the entry to be saved
         try{
-            users.put(user.getSteam3Id(), user);
+            // set the relative path of the location of the json file
+            String fileLocation = "./src/main/resources/users.json";
+            // create a jackson object mapper to use for converting an object to a json file
             ObjectMapper mapper = new ObjectMapper();
+            // tell the mapper to parse a single value as an array to avoid errors
+            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
-            mapper.writeValue(Paths.get("users.json").toFile(), users);
+            // check if the file already exists at the location specified
+            File f = new File(fileLocation);
+            if(f.isFile()) {
+                // if the file does exist, use the mapper to read the value and parse it as an arraylist
+                ArrayList<UserModel> userList = new ArrayList<UserModel>(Arrays.asList(mapper.readValue(f, UserModel[].class)));
+                // add the new stat entry onto the list
+                userList.add(user);
+                // overwrite the contents of the file with the newly extended list
+                mapper.writeValue(f, userList);
+            }
+            else {
+                // create a new file by writing the single entry
+                mapper.writeValue(f, user);
+            }
+
         } catch (Exception ex)
         {
-            System.out.println("unable to stringify user '" + user.getUsername() + "' to .json file");
+            // print the stack trace in case there's an error here reading/writing to file
             ex.printStackTrace();
         }
         return user;

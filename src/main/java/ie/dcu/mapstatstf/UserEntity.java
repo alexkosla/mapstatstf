@@ -9,7 +9,7 @@ public class UserEntity {
 
     private String username;
 
-    private UUID preferredClass;
+    private String preferredClass;
 
     private boolean isAdmin;
 
