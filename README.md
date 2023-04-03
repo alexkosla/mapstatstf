@@ -3,16 +3,19 @@
 The way I ran this program locally was via IntelliJ, my IDE.
 Load the project into IntelliJ (https://www.jetbrains.com/idea/download).
 To do so, unzip the project folder (mapstatstf) and open it up.
+
 ![image](https://user-images.githubusercontent.com/33711919/229609649-9ad8f789-fe78-470f-9c6d-9e023106a410.png)
 
 
 For the back-end create a new maven configuration matching this image
+
 ![image](https://user-images.githubusercontent.com/33711919/229597270-3073e524-7ba0-4ec8-b3c7-202152a9c21f.png)
 
 For displaying the webpage, I created a new tomcat configuration matching this image. I had trouble doing this with any version of tomcat aside from Tomcat 10.0.2, which can be downloaded here (https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.2/bin/) and installed with Dr. Ali's instructions. 
+
 ![image](https://user-images.githubusercontent.com/33711919/229598443-992ef046-414c-46f4-aff1-59f62b8548c7.png)
 
-Run both of these using the arrow at the top right of the screen. Similar configurations are almost certainly possible to do in Eclipse.
+Run both of these simultaneously using the arrow at the top right of the screen. Similar configurations are almost certainly possible to do in Eclipse.
 
 To access the front-end, go to http://localhost:8999/. The back-end querying forms can be found on the sidebar, accessible from the hamburger menu at the top left.
 
