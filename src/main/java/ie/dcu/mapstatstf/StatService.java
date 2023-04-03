@@ -78,19 +78,24 @@ public class StatService {
                 if(userList != null)
                 {
                     // https://stackoverflow.com/questions/19396944/what-is-the-java-equivalent-for-enumerable-select-with-lambdas-in-c
-//                    userList.stream().map(usr -> usr.getSteam64Id()).collect(Collectors.toList());
                     // will return a list of length 1 because we've enforced steam64Id to be unique
+                    // similar to a one-liner foreach loop that returns the list of all UserModels in the list
+                    // where their steam64Id matches the steam64Id argument from the controller
                     List<UserModel> filteredUsers = userList.stream()
                             .filter(usr ->  usr.getSteam64Id() == steam64Id)
                             .collect(Collectors.toList());
                     UserModel user = filteredUsers.get(0);
 
-                    for(int i = 0; i < statList.size(); i++)
+                    List<StatModel> filteredStats = statList.stream()
+                            .filter(st ->  st.getSteam64Id() == steam64Id)
+                            .collect(Collectors.toList());
+
+                    for(int i = 0; i < filteredStats.size(); i++)
                     {
                         // create an empty userStatEntity to fill manually
                         UserStatEntity userStat = new UserStatEntity();
                         // iterate through the statList
-                        StatModel currStat = statList.get(i);
+                        StatModel currStat = filteredStats.get(i);
 
                         // manually set all the fields of userStatEntity using data from both UserModel and StatModel
                         userStat.setLogId(currStat.getLogId());

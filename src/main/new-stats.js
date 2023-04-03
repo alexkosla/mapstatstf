@@ -159,6 +159,11 @@ function displaySavedRows(table, data)
             // and then add it to the row
             const csteam64ID = document.createElement("td");
             const csteam64IDText = document.createTextNode(data[i].steam64Id);
+            csteam64ID.addEventListener('click', function handleClick(event) {
+              console.log('element clicked 🎉🎉🎉', event);
+              loadUserStats(data[i].steam64Id);
+            });
+
             csteam64ID.appendChild(csteam64IDText);
             row.appendChild(csteam64ID);
 
@@ -216,6 +221,100 @@ function displaySavedRows(table, data)
     {
         alert("No stats saved! Try submitting some first.");
     }
+}
+
+function displayUserStats(table, data)
+{
+  // check if there are any stats loaded from local storage
+  if(data)
+  {
+      // count = data.length;
+      count = table.rows.length;
+      for (let i = 1; i < count; i++)
+      {
+          // if the table has data rows in it, 
+          // for every entry loaded in from the back-end, delete the first data row
+          // table row 0 is the header, so we don't want to delete that
+          // this will incrementally delete all previously loaded entries in the table
+          // if(table.rows.length > 1)
+          // {
+          //     table.deleteRow(1);
+          // }
+          table.deleteRow(i);
+          debugger
+      }
+
+      // for each loaded entry, create a data row
+      for (let i = 0; i < count; i++)
+      {
+          const row = document.createElement("tr");
+
+          // create a cell in the row for the logId, set the text to be loaded text
+          // and then add it to the row
+          const csteam64ID = document.createElement("td");
+          const csteam64IDText = document.createTextNode(data[i].username);
+          csteam64ID.appendChild(csteam64IDText);
+          row.appendChild(csteam64ID);
+
+          // repeat for all of the saved stats
+          const cLogId = document.createElement("td");
+          const cLogIdText = document.createTextNode(data[i].logId);
+          cLogId.appendChild(cLogIdText);
+          row.appendChild(cLogId);
+
+          const cMap = document.createElement("td");
+          const cMapText = document.createTextNode(data[i].mapId);
+          cMap.appendChild(cMapText);
+          row.appendChild(cMap);
+
+          const cPreferredClass = document.createElement("td");
+          const cPreferredClassText = document.createTextNode(data[i].preferredClass);
+          cPreferredClass.appendChild(cPreferredClassText);
+          row.appendChild(cPreferredClass);
+
+          const cClass = document.createElement("td");
+          const cClassText = document.createTextNode(data[i].className);
+          cClass.appendChild(cClassText);
+          row.appendChild(cClass);
+
+          const cKills = document.createElement("td");
+          const cKillText = document.createTextNode(data[i].kills);
+          cKills.appendChild(cKillText);
+          row.appendChild(cKills);
+
+          const cAssists = document.createElement("td");
+          const cAssistsText = document.createTextNode(data[i].assists);
+          cAssists.appendChild(cAssistsText);
+          row.appendChild(cAssists);
+
+          const cDeaths = document.createElement("td");
+          const cDeathsText = document.createTextNode(data[i].deaths);
+          cDeaths.appendChild(cDeathsText);
+          row.appendChild(cDeaths);
+
+          const cDamage = document.createElement("td");
+          const cDamageText = document.createTextNode(data[i].damage);
+          cDamage.appendChild(cDamageText);
+          row.appendChild(cDamage);
+
+          const cDamageTaken = document.createElement("td");
+          const cDamageTakenText = document.createTextNode(data[i].damageTaken);
+          cDamageTaken.appendChild(cDamageTakenText);
+          row.appendChild(cDamageTaken);
+
+          const cSeconds = document.createElement("td");
+          const cSecondsText = document.createTextNode(data[i].seconds);
+          cSeconds.appendChild(cSecondsText);
+          row.appendChild(cSeconds);
+
+          // finally once we're done adding cells onto the row, we append the row onto the table
+          table.append(row);
+      }
+  }
+  else
+  {
+      alert("No stats saved! Try submitting some first.");
+  }
 
 }
 
@@ -234,4 +333,24 @@ function fetchStats(){
     .catch((error) => {
         window.alert(error);
     });
+}
+
+function loadUserStats(steam64Id){
+  console.log("in loadUserStats");
+  console.log(steam64Id);
+  const table = document.getElementById('joined-stats');
+
+  const url = "http://localhost:8081/stats-ID?steam64Id=" + steam64Id;
+  fetch(url, {
+      method: "GET",
+      headers: {"Content-type": "application/json"}
+  })
+  .then(response => response.json())
+  .then(data => {
+      displayUserStats(table, data);
+  })
+  .catch((error) => {
+      window.alert(error);
+  });
+
 }
