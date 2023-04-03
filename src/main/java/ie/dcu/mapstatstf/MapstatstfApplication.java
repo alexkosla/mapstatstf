@@ -3,6 +3,7 @@ package ie.dcu.mapstatstf;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// main application function
 @SpringBootApplication
 public class MapstatstfApplication {
 

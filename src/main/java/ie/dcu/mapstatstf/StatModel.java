@@ -62,7 +62,6 @@ public class StatModel {
     }
 
     public void setSteam64Id(long steam64Id) {
-        System.out.println("************* setting steam64Id which is: "+steam64Id+"****************");
         this.steam64Id = steam64Id;
     }
 

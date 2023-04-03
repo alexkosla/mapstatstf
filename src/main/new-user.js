@@ -1,4 +1,7 @@
-const url = "http://localhost:8081/submit-user";
+// localhost port for development
+// url = "http://localhost:8081/submit-user";
+// example of url used with tomcat
+url = "http://localhost:8087/mapstatstf-q3-4/submit-user";
 
 function validateForm() {
     var missingFields = new Array();
