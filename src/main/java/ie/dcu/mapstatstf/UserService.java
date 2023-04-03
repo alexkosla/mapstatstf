@@ -14,6 +14,7 @@ public class UserService {
     public UserService() {
     }
 
+    // function returns a list of all users saved
     public List<UserModel> listUsers()
     {
         try{

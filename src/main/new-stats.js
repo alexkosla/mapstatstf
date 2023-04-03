@@ -92,40 +92,18 @@ function saveStats(){
 
     // try to load any saved states and parse them as a dict
     var loadedStats = JSON.parse(localStorage.getItem('stats'));
-    let toSaveDict = {};
-
-    // if there are stats in localStorage, append the ones from the form onto them
-    // if(loadedStats != null)
-    // {
-    //     toSaveDict = loadedStats;
-    //     toSaveDict.steam64ID.push(toSave.steam64ID.value);
-    //     toSaveDict.logId.push(toSave.logId.value);
-    //     toSaveDict.map.push(toSave.map.value);
-    //     toSaveDict.class.push(toSave.class.value);
-    //     toSaveDict.kills.push(toSave.killcount.value);
-    //     toSaveDict.assists.push(toSave.assistcount.value);
-    //     toSaveDict.deaths.push(toSave.deathcount.value);
-    //     toSaveDict.damage.push(toSave.damage.value);
-    //     toSaveDict.damageTaken.push(toSave.damageTaken.value);
-    //     toSaveDict.seconds.push(toSave.seconds.value);
-    // }
-    // else
-    // {
-    //     // if there aren't any stats saved in localStorage, then create a new
-    //     // dict of arrays to hold the stats
-        toSaveDict = {
-            logId: toSave.logId.value,
-            steam64Id: toSave.steam64ID.value,
-            mapId: toSave.map.value,
-            className: toSave.class.value,
-            kills: toSave.killcount.value,
-            assists: toSave.assistcount.value,
-            deaths: toSave.deathcount.value,
-            damage: toSave.damage.value,
-            damageTaken: toSave.damageTaken.value,
-            seconds: toSave.seconds.value
-        }
-    // }
+    let toSaveDict = {
+        logId: toSave.logId.value,
+        steam64Id: toSave.steam64ID.value,
+        mapId: toSave.map.value,
+        className: toSave.class.value,
+        kills: toSave.killcount.value,
+        assists: toSave.assistcount.value,
+        deaths: toSave.deathcount.value,
+        damage: toSave.damage.value,
+        damageTaken: toSave.damageTaken.value,
+        seconds: toSave.seconds.value
+    };
 
     // save the dict you've added the form stats to to local storage
     localStorage.setItem('stats', JSON.stringify(toSaveDict));
@@ -133,8 +111,6 @@ function saveStats(){
     // localStorage.setItem('users', request);
 
     event.preventDefault();
-    console.log("about to try submitting users w/ request");
-    console.log(request);
     fetch(url, {
         method: 'POST',
         headers: {'Content-type': 'application/json'},
@@ -147,7 +123,7 @@ function saveStats(){
         if (response.status != 201) {
             return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
         }
-        loadStats();
+        fetchStats();
     })
     .catch(error => {
         alert('There was an error!\n' +  error.message);
@@ -156,16 +132,16 @@ function saveStats(){
     });
 }
 
-function displaySavedRows(table, loadedStats)
+function displaySavedRows(table, data)
 {
     // check if there are any stats loaded from local storage
-    if(loadedStats)
+    if(data)
     {
-        count = loadedStats.logId.length;
+        count = data.length;
         for (let i = 0; i < count; i++)
         {
             // if the table has data rows in it, 
-            // for every entry loaded in from localstorage, delete the first data row
+            // for every entry loaded in from the back-end, delete the first data row
             // table row 0 is the header, so we don't want to delete that
             // this will incrementally delete all previously loaded entries in the table
             if(table.rows.length > 1)
@@ -181,54 +157,54 @@ function displaySavedRows(table, loadedStats)
 
             // create a cell in the row for the logId, set the text to be loaded text
             // and then add it to the row
-            const cLogId = document.createElement("td");
-            const cLogIdText = document.createTextNode(loadedStats.logId[i]);
-            cLogId.appendChild(cLogIdText);
-            row.appendChild(cLogId);
-
-            // repeat for all of the saved stats
             const csteam64ID = document.createElement("td");
-            const csteam64IDText = document.createTextNode(loadedStats.steam64ID[i]);
+            const csteam64IDText = document.createTextNode(data[i].steam64Id);
             csteam64ID.appendChild(csteam64IDText);
             row.appendChild(csteam64ID);
 
+            // repeat for all of the saved stats
+            const cLogId = document.createElement("td");
+            const cLogIdText = document.createTextNode(data[i].logId);
+            cLogId.appendChild(cLogIdText);
+            row.appendChild(cLogId);
+
             const cMap = document.createElement("td");
-            const cMapText = document.createTextNode(loadedStats.map[i]);
+            const cMapText = document.createTextNode(data[i].mapId);
             cMap.appendChild(cMapText);
             row.appendChild(cMap);
 
             const cClass = document.createElement("td");
-            const cClassText = document.createTextNode(loadedStats.class[i]);
+            const cClassText = document.createTextNode(data[i].className);
             cClass.appendChild(cClassText);
             row.appendChild(cClass);
 
             const cKills = document.createElement("td");
-            const cKillText = document.createTextNode(loadedStats.kills[i]);
+            const cKillText = document.createTextNode(data[i].kills);
             cKills.appendChild(cKillText);
             row.appendChild(cKills);
 
             const cAssists = document.createElement("td");
-            const cAssistsText = document.createTextNode(loadedStats.assists[i]);
+            const cAssistsText = document.createTextNode(data[i].assists);
             cAssists.appendChild(cAssistsText);
             row.appendChild(cAssists);
 
             const cDeaths = document.createElement("td");
-            const cDeathsText = document.createTextNode(loadedStats.deaths[i]);
+            const cDeathsText = document.createTextNode(data[i].deaths);
             cDeaths.appendChild(cDeathsText);
             row.appendChild(cDeaths);
 
             const cDamage = document.createElement("td");
-            const cDamageText = document.createTextNode(loadedStats.damage[i]);
+            const cDamageText = document.createTextNode(data[i].damage);
             cDamage.appendChild(cDamageText);
             row.appendChild(cDamage);
 
             const cDamageTaken = document.createElement("td");
-            const cDamageTakenText = document.createTextNode(loadedStats.damageTaken[i]);
+            const cDamageTakenText = document.createTextNode(data[i].damageTaken);
             cDamageTaken.appendChild(cDamageTakenText);
             row.appendChild(cDamageTaken);
 
             const cSeconds = document.createElement("td");
-            const cSecondsText = document.createTextNode(loadedStats.seconds[i]);
+            const cSecondsText = document.createTextNode(data[i].seconds);
             cSeconds.appendChild(cSecondsText);
             row.appendChild(cSeconds);
 
@@ -243,10 +219,19 @@ function displaySavedRows(table, loadedStats)
 
 }
 
-function loadStats(){
-    // load the table and locally stored stats and pass them to a function that will display the data
+function fetchStats(){
     const table = document.getElementById('all-stats');
-    var loadedStats = JSON.parse(localStorage.getItem('stats'));
 
-    displaySavedRows(table, loadedStats);
+    const url = "http://localhost:8081/stats";
+    fetch(url, {
+        method: "GET",
+        headers: {"Content-type": "application/json"}
+    })
+    .then(response => response.json())
+    .then(data => {
+        displaySavedRows(table, data);
+    })
+    .catch((error) => {
+        window.alert(error);
+    });
 }

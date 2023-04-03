@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class StatController {
 
@@ -21,6 +23,16 @@ public class StatController {
     public String HelloStat()
     {
         return "hello you are in the stat controller";
+    }
+
+    // GET endpoint for returning list of all users
+    @GetMapping("/stats")
+    @CrossOrigin(origins ="*")
+    public ResponseEntity<List<StatModel>> getList()
+    {
+        // put business logic in the service, out of the controller
+        // returns a list of all stats saved with an ok message
+        return ResponseEntity.ok(service.listStats());
     }
 
     // POST endpoint to submit a new stat entry

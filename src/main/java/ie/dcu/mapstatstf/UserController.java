@@ -43,6 +43,7 @@ public class UserController {
     public ResponseEntity<List<UserModel>> getUsers()
     {
         // put business logic in the service, out of the controller
+        // returns a list of all users saved with an ok message
         return ResponseEntity.ok(service.listUsers());
     }
 }
