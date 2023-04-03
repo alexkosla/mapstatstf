@@ -3,6 +3,7 @@ const url = "http://localhost:8080/submit-stats";
 function validateForm() {
     var missingFields = new Array();
     let errormsg = "";
+    hasMiscError = false;
 
     // for every field in the form, get its value and check if it's empty
     // if it's empty, then add it to a list of missing fields
@@ -10,7 +11,7 @@ function validateForm() {
     if (steam64ID == "") {
       missingFields.push("Steam ID");
     }
-    if(/\D/.test(steam64Id) || steam64Id < 0)
+    if(/\D/.test(steam64ID) || steam64ID < 0)
     {
         alert("steam64Id must be a positive number");
         hasMiscError = true;
@@ -20,6 +21,7 @@ function validateForm() {
     if (logid == "") {
       missingFields.push("Log ID");
     }
+    // test that logId is a positive integer
     if(/\D/.test(logid) || logid < 0)
     {
         alert("logid must be a positive number");
@@ -117,6 +119,10 @@ function validateForm() {
         }
         alert("Missing the following fields: " + errormsg.toString())
         return false;
+    }
+    else if(hasMiscError)
+    {
+        alert("incorrect formatting for input, stats not submitted");
     }
     else{
         // if there are no missing fields, save the entered data and then send an alert
@@ -274,10 +280,6 @@ function displayUserStats(table, data)
           // for every entry loaded in from the back-end, delete the first data row
           // table row 0 is the header, so we don't want to delete that
           // this will incrementally delete all previously loaded entries in the table
-          // if(table.rows.length > 1)
-          // {
-          //     table.deleteRow(1);
-          // }
           table.deleteRow(i);
           debugger
       }
