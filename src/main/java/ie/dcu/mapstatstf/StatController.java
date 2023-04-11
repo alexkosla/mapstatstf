@@ -28,7 +28,7 @@ public class StatController {
     // GET endpoint for returning list of all users
     @GetMapping("/stats")
     @CrossOrigin(origins ="*")
-    public ResponseEntity<List<StatModel>> getList()
+    public ResponseEntity<List<StatEntity>> getList()
     {
         // put business logic in the service, out of the controller
         // returns a list of all stats saved with an ok message
@@ -48,7 +48,7 @@ public class StatController {
     // POST endpoint to submit a new stat entry
     @PostMapping("/submit-stats")
     @CrossOrigin(origins ="*")
-    public ResponseEntity<Void> submitStat(@RequestBody StatModel stat)
+    public ResponseEntity<Void> submitStat(@RequestBody StatEntity stat)
     {
         // keep business logic out of the controller, use the service for that
         service.addStat(stat);

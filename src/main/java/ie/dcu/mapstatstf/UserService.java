@@ -29,7 +29,6 @@ public class UserService {
             System.out.println("Can I connect to database ?  : " + isValid);
 
             PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.users");
-//            selectStatement.setString(1, "Ali");
             ResultSet rs = selectStatement.executeQuery();
             ArrayList<UserModel> userList = new ArrayList<UserModel>();
             while (rs.next()) {

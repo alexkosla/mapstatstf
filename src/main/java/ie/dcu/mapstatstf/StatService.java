@@ -18,7 +18,7 @@ public class StatService {
     public StatService() {
     }
     // function returns a list of all users saved
-    public List<StatModel> listStats()
+    public List<StatEntity> listStats()
     {
         try (Connection conn = DriverManager
                 .getConnection("jdbc:mysql://localhost:3306/",
@@ -30,11 +30,11 @@ public class StatService {
 
             PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.masterstats");
             ResultSet rs = selectStatement.executeQuery();
-            ArrayList<StatModel> statList = new ArrayList<StatModel>();
+            ArrayList<StatEntity> statList = new ArrayList<StatEntity>();
             while (rs.next()) {
                 UUID statId = UUID.fromString(rs.getString("StatId"));
                 long logId = rs.getLong("LogId");
-                long steam64Id = rs.getLong("Steam64Id");
+                String steam64Id = String.valueOf(rs.getLong("Steam64Id"));
                 String className = rs.getString("Class");
                 int mapId = rs.getInt("MapId");
                 int kills = rs.getInt("Kills");
@@ -44,7 +44,7 @@ public class StatService {
                 int damageTaken = rs.getInt("Damage Taken");
                 int secondsPlayed = rs.getInt("SecondsPlayed");
 
-                statList.add(new StatModel(statId, logId, steam64Id, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
+                statList.add(new StatEntity(statId, logId, steam64Id, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
             }
             return statList;
         } catch (Exception ex)
@@ -58,40 +58,68 @@ public class StatService {
     // function returns a list of all users saved
     public List<UserStatEntity> listUserStats(long steam64Id)
     {
-        ArrayList<StatModel> statList = null;
-        ArrayList<UserModel> userList = null;
+        ArrayList<StatModel> statList = new ArrayList<StatModel>();
+        ArrayList<UserModel> userList = new ArrayList<UserModel>();
         ArrayList<UserStatEntity> userStatEntities = new ArrayList<UserStatEntity>();
-        try{
-            // set the relative path of the location of the json file
-            String fileLocation = "./src/main/resources/stats.json";
-            // create a jackson object mapper to use for converting an object to a json file
-            ObjectMapper mapper = new ObjectMapper();
-            // tell the mapper to parse a single value as an array to avoid errors
-            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
-            // check if the file already exists at the location specified
-            File f = new File(fileLocation);
-            if(f.isFile()) {
-                // if the file does exist, use the mapper to read the value and parse it as an arraylist
-                statList = new ArrayList<StatModel>(Arrays.asList(mapper.readValue(f, StatModel[].class)));
-                // add the new stat entry onto the list
+        try (Connection conn = DriverManager
+                .getConnection("jdbc:mysql://localhost:3306/",
+                        "root", "admin"))
+        {
+
+            boolean isValid = conn.isValid(0);
+            System.out.println("Can I connect to database ?  : " + isValid);
+
+            PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.masterstats");
+            ResultSet rs = selectStatement.executeQuery();
+            while (rs.next()) {
+                UUID statId = UUID.fromString(rs.getString("StatId"));
+                long logId = rs.getLong("LogId");
+                long steam64Idtemp = rs.getLong("Steam64Id");
+                String className = rs.getString("Class");
+                int mapId = rs.getInt("MapId");
+                int kills = rs.getInt("Kills");
+                int assists = rs.getInt("Assists");
+                int deaths = rs.getInt("Deaths");
+                int damage = rs.getInt("Damage");
+                int damageTaken = rs.getInt("Damage Taken");
+                int secondsPlayed = rs.getInt("SecondsPlayed");
+
+                statList.add(new StatModel(statId, logId, steam64Idtemp, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
             }
+
+//        try{
+//            // set the relative path of the location of the json file
+//            String fileLocation = "./src/main/resources/stats.json";
+//            // create a jackson object mapper to use for converting an object to a json file
+//            ObjectMapper mapper = new ObjectMapper();
+//            // tell the mapper to parse a single value as an array to avoid errors
+//            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+//
+//            // check if the file already exists at the location specified
+//            File f = new File(fileLocation);
+//            if(f.isFile()) {
+//                // if the file does exist, use the mapper to read the value and parse it as an arraylist
+//                statList = new ArrayList<StatModel>(Arrays.asList(mapper.readValue(f, StatModel[].class)));
+//                // add the new stat entry onto the list
+//            }
 
             if(statList != null)
             {
-                // set the relative path of the location of the users json file
-                fileLocation = "./src/main/resources/users.json";
+                selectStatement = conn.prepareStatement("select * from mydb.users");
+                rs = selectStatement.executeQuery();
+                while (rs.next()) {
+                    long steam64Idtemp = rs.getLong("Steam64Id");
+                    String steam3Id = rs.getString("Steam3Id");
+                    String username = rs.getString("Username");
+                    String preferredClass = rs.getString("PreferredClass");
+                    boolean isAdmin = rs.getBoolean("IsAdmin");
 
-                // check if the file already exists at the location specified
-                f = new File(fileLocation);
-                if(f.isFile()) {
-                    // if the file does exist, use the mapper to read the value and parse it as an arraylist
-                    userList = new ArrayList<UserModel>(Arrays.asList(mapper.readValue(f, UserModel[].class)));
+                    userList.add(new UserModel(steam64Idtemp, steam3Id, username, preferredClass, isAdmin));
                 }
 
                 if(userList != null)
                 {
-                    // https://stackoverflow.com/questions/19396944/what-is-the-java-equivalent-for-enumerable-select-with-lambdas-in-c
                     // will return a list of length 1 because we've enforced steam64Id to be unique
                     // similar to a one-liner foreach loop that returns the list of all UserModels in the list
                     // where their steam64Id matches the steam64Id argument from the controller
@@ -139,7 +167,7 @@ public class StatService {
     }
 
     // saves/appends a stat entry to a file
-    public StatModel addStat(StatModel stat)
+    public StatEntity addStat(StatEntity stat)
     {
         // create a unique identifier for the entry to be saved
         if(stat.getStatId() == null)
@@ -165,7 +193,7 @@ public class StatService {
 
                 insertNewStat.setString(1, String.valueOf(stat.getStatId()));
                 insertNewStat.setLong(2, stat.getLogId());
-                insertNewStat.setLong(3, stat.getSteam64Id());
+                insertNewStat.setLong(3, Long.getLong(stat.getSteam64Id()));
                 insertNewStat.setString(4, stat.getClassName());
                 insertNewStat.setInt(5, stat.getMapId());
                 insertNewStat.setInt(6, stat.getKills());
@@ -177,30 +205,6 @@ public class StatService {
                 insertNewStat.executeUpdate();
                 return stat;
             }
-
-//        try{
-//            // set the relative path of the location of the json file
-//            String fileLocation = "./src/main/resources/stats.json";
-//            // create a jackson object mapper to use for converting an object to a json file
-//            ObjectMapper mapper = new ObjectMapper();
-//            // tell the mapper to parse a single value as an array to avoid errors
-//            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-//
-//            // check if the file already exists at the location specified
-//            File f = new File(fileLocation);
-//            if(f.isFile()) {
-//                // if the file does exist, use the mapper to read the value and parse it as an arraylist
-//                ArrayList<StatModel> statList = new ArrayList<StatModel>(Arrays.asList(mapper.readValue(f, StatModel[].class)));
-//                // add the new stat entry onto the list
-//                statList.add(stat);
-//                // overwrite the contents of the file with the newly extended list
-//                mapper.writeValue(f, statList);
-//            }
-//            else {
-//                // create a new file by writing the single entry
-//                mapper.writeValue(f, stat);
-//            }
-
         } catch (Exception ex)
         {
             // print the stack trace in case there's an error here reading/writing to file
