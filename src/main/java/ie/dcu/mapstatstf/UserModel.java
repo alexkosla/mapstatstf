@@ -17,6 +17,14 @@ public class UserModel {
     // true if user is an admin, false otherwise
     private boolean admin;
 
+    public UserModel(long steam64Id, String steam3Id, String username, String preferredClass, boolean admin) {
+        this.steam64Id = steam64Id;
+        this.steam3Id = steam3Id;
+        this.username = username;
+        this.preferredClass = preferredClass;
+        this.admin = admin;
+    }
+
     public long getSteam64Id() {
         return steam64Id;
     }

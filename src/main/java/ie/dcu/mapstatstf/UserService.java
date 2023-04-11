@@ -6,6 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.*;
 
 @Service
@@ -17,22 +21,43 @@ public class UserService {
     // function returns a list of all users saved
     public List<UserModel> listUsers()
     {
-        try{
-            // set the relative path of the location of the json file
-            String fileLocation = "./src/main/resources/users.json";
-            // create a jackson object mapper to use for converting an object to a json file
-            ObjectMapper mapper = new ObjectMapper();
-            // tell the mapper to parse a single value as an array to avoid errors
-            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        try (Connection conn = DriverManager
+                .getConnection("jdbc:mysql://localhost:3306/",
+                        "root", "admin")) {
 
-            // check if the file already exists at the location specified
-            File f = new File(fileLocation);
-            if(f.isFile()) {
-                // if the file does exist, use the mapper to read the value and parse it as an arraylist
-                ArrayList<UserModel> userList = new ArrayList<UserModel>(Arrays.asList(mapper.readValue(f, UserModel[].class)));
-                // add the new stat entry onto the list
-                return userList;
+            boolean isValid = conn.isValid(0);
+            System.out.println("Can I connect to database ?  : " + isValid);
+
+            PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.users");
+//            selectStatement.setString(1, "Ali");
+            ResultSet rs = selectStatement.executeQuery();
+            ArrayList<UserModel> userList = new ArrayList<UserModel>();
+            while (rs.next()) {
+                long steam64Id = rs.getLong("Steam64Id");
+                String steam3Id = rs.getString("Steam3Id");
+                String username = rs.getString("Username");
+                String preferredClass = rs.getString("PreferredClass");
+                boolean isAdmin = rs.getBoolean("IsAdmin");
+
+                userList.add(new UserModel(steam64Id, steam3Id, username, preferredClass, isAdmin));
             }
+            return userList;
+
+//            // set the relative path of the location of the json file
+//            String fileLocation = "./src/main/resources/users.json";
+//            // create a jackson object mapper to use for converting an object to a json file
+//            ObjectMapper mapper = new ObjectMapper();
+//            // tell the mapper to parse a single value as an array to avoid errors
+//            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+//
+//            // check if the file already exists at the location specified
+//            File f = new File(fileLocation);
+//            if(f.isFile()) {
+//                // if the file does exist, use the mapper to read the value and parse it as an arraylist
+//                ArrayList<UserModel> userList = new ArrayList<UserModel>(Arrays.asList(mapper.readValue(f, UserModel[].class)));
+//                // add the new stat entry onto the list
+//                return userList;
+//            }
         } catch (Exception ex)
         {
             // print the stack trace in case there's an error here reading/writing to file
