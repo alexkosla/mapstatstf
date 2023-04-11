@@ -1,5 +1,5 @@
 // localhost port for development
-url = "http://localhost:8080/submit-user";
+url = "http://localhost:8081/submit-user";
 // example of url used with tomcat
 // url = "http://localhost:8087/mapstatstf-q3-4/submit-user";
 

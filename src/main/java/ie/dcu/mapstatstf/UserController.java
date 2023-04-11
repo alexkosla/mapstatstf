@@ -42,6 +42,7 @@ public class UserController {
     @CrossOrigin(origins ="*")
     public ResponseEntity<List<UserModel>> getUsers()
     {
+        System.out.println("YOOOO WE IN GET ALL USERS");
         // put business logic in the service, out of the controller
         // returns a list of all users saved with an ok message
         return ResponseEntity.ok(service.listUsers());
