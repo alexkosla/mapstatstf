@@ -41,6 +41,20 @@ public class StatModel {
     // length the player played in the match in seconds
     private int seconds;
 
+    public StatModel(UUID statId, long logId, long steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
+        this.statId = statId;
+        this.logId = logId;
+        this.steam64Id = steam64Id;
+        this.mapId = mapId;
+        this.className = className;
+        this.kills = kills;
+        this.assists = assists;
+        this.deaths = deaths;
+        this.damage = damage;
+        this.damageTaken = damageTaken;
+        this.seconds = seconds;
+    }
+
     public UUID getStatId() {
         return statId;
     }
