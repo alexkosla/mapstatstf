@@ -108,10 +108,6 @@ function saveStats(){
         if (response.status != 201) {
             return Promise.reject(data || {'status': response.status, 'message' : 'Unexpected Error'});
         }
-        else
-        {
-            displaySavedRows(table, data);
-        }
     })
     .catch(error => {
         alert('There was an error!\n' +  error.message);
@@ -175,11 +171,6 @@ function displaySavedRows(table, data)
             table.append(row);
         }
     }
-    else
-    {
-        alert("No stats saved! Try submitting some first.");
-    }
-
 }
 
 function fetchUsers(){
@@ -192,6 +183,8 @@ function fetchUsers(){
     })
     .then(response => response.json())
     .then(data => {
+        
+        console.log("calling displaySavedRows from fetchUsers");
         displaySavedRows(table, data);
     })
     .catch((error) => {
