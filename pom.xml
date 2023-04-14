@@ -10,10 +10,10 @@
 	</parent>
 	<groupId>ie.dcu</groupId>
 	<artifactId>mapstatstf</artifactId>
-	<version>q2</version>
+	<version>assignment4-q1</version>
 	<packaging>war</packaging>
 	<name>mapstatstf</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Team Fortress 2 Stats website</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
