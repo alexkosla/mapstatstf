@@ -154,7 +154,6 @@ function saveStats(){
     // save the dict you've added the form stats to to local storage
     localStorage.setItem('stats', JSON.stringify(toSaveDict));
     request = JSON.stringify(toSaveDict);
-    // localStorage.setItem('users', request);
 
     event.preventDefault();
     fetch(url, {
@@ -207,6 +206,9 @@ function displaySavedRows(table, data)
             csteam64ID.addEventListener('click', function handleClick(event) {
               loadUserStats(data[i].steam64Id);
             });
+            // make the steam64Id text appear as a hyperlink to suggest you clicking on it
+            csteam64ID.style.color = 'cyan';
+            csteam64ID.style.textDecoration = 'underline';
 
             csteam64ID.appendChild(csteam64IDText);
             row.appendChild(csteam64ID);
@@ -280,12 +282,11 @@ function displayUserStats(table, data)
           // for every entry loaded in from the back-end, delete the first data row
           // table row 0 is the header, so we don't want to delete that
           // this will incrementally delete all previously loaded entries in the table
-          table.deleteRow(i);
-          debugger
+          table.deleteRow(1);
       }
 
       // for each loaded entry, create a data row
-      for (let i = 0; i < count; i++)
+      for (let i = 0; i < data.length; i++)
       {
           const row = document.createElement("tr");
 

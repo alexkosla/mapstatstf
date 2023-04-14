@@ -20,21 +20,37 @@ public class StatService {
     // function returns a list of all users saved
     public List<StatEntity> listStats()
     {
+        // attempt to open up a connection with the database with a hardcoded url, username, and password
         try (Connection conn = DriverManager
                 .getConnection("jdbc:mysql://localhost:3306/",
                         "root", "admin"))
         {
-
-            boolean isValid = conn.isValid(0);
-            System.out.println("Can I connect to database ?  : " + isValid);
-
+            // write a SQL query string and convert it to a java-friendly object
+            // query gets back all of the data from the masterstats table in mydb
             PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.masterstats");
+            // execute the query and get back the results
             ResultSet rs = selectStatement.executeQuery();
+
+            // create an empty list to store the contents of the result set
             ArrayList<StatEntity> statList = new ArrayList<StatEntity>();
+
+            // while there is another entry in the result set...
             while (rs.next()) {
+                // for this row in the result set, get data for the "StatId" column, parse it as a string
+                // then convert it to UUID type
                 UUID statId = UUID.fromString(rs.getString("StatId"));
-                long logId = rs.getLong("LogId");
+
+                // for this row in the result set, get data for the "LogId" column which is a long
+                // then convert it to a string, as javascript will cut off the least significant bits
+                // of a long, but not of a string
+                String logId = String.valueOf(rs.getLong("LogId"));
+
+                // for this row in the result set, get data for the "Steam64Id" column which is a long
+                // then convert it to a string, as javascript will cut off the least significant bits
+                // of a long, but not of a string
                 String steam64Id = String.valueOf(rs.getLong("Steam64Id"));
+
+                // continue in a similar fashion for the remaining fields in the masterstats table
                 String className = rs.getString("Class");
                 int mapId = rs.getInt("MapId");
                 int kills = rs.getInt("Kills");
@@ -44,14 +60,19 @@ public class StatService {
                 int damageTaken = rs.getInt("Damage Taken");
                 int secondsPlayed = rs.getInt("SecondsPlayed");
 
+                // take all of these saved temporary fields and use them to create an instance of StatEntity
+                // we return a StatEntity rather than a StatModel to get around js quirks with handling longs (this has no longs)
+                // append this newly created StatEntity onto the statList
                 statList.add(new StatEntity(statId, logId, steam64Id, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
             }
+            // once we've processed all of the results of the query and added them to the statList, return it
             return statList;
         } catch (Exception ex)
         {
             // print the stack trace in case there's an error here reading/writing to file
             ex.printStackTrace();
         }
+        // if anything goes awry, return an empty list
         return Collections.emptyList();
     }
 
@@ -62,6 +83,7 @@ public class StatService {
         ArrayList<UserModel> userList = new ArrayList<UserModel>();
         ArrayList<UserStatEntity> userStatEntities = new ArrayList<UserStatEntity>();
 
+        // attempt to open up a connection with the database with a hardcoded url, username, and password
         try (Connection conn = DriverManager
                 .getConnection("jdbc:mysql://localhost:3306/",
                         "root", "admin"))
@@ -87,23 +109,6 @@ public class StatService {
 
                 statList.add(new StatModel(statId, logId, steam64Idtemp, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
             }
-
-//        try{
-//            // set the relative path of the location of the json file
-//            String fileLocation = "./src/main/resources/stats.json";
-//            // create a jackson object mapper to use for converting an object to a json file
-//            ObjectMapper mapper = new ObjectMapper();
-//            // tell the mapper to parse a single value as an array to avoid errors
-//            mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-//
-//            // check if the file already exists at the location specified
-//            File f = new File(fileLocation);
-//            if(f.isFile()) {
-//                // if the file does exist, use the mapper to read the value and parse it as an arraylist
-//                statList = new ArrayList<StatModel>(Arrays.asList(mapper.readValue(f, StatModel[].class)));
-//                // add the new stat entry onto the list
-//            }
-
             if(statList != null)
             {
                 selectStatement = conn.prepareStatement("select * from mydb.users");
@@ -192,7 +197,7 @@ public class StatService {
                 PreparedStatement insertNewStat = conn.prepareStatement("INSERT INTO `mydb`.`MasterStats` (`StatId`, `LogID`, `Steam64ID`, `Class`, `MapID`, `Kills`, `Assists`, `Deaths`, `Damage`, `Damage Taken`, `SecondsPlayed`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
                 insertNewStat.setString(1, String.valueOf(stat.getStatId()));
-                insertNewStat.setLong(2, stat.getLogId());
+                insertNewStat.setLong(2, Long.getLong(stat.getLogId()));
                 insertNewStat.setLong(3, Long.getLong(stat.getSteam64Id()));
                 insertNewStat.setString(4, stat.getClassName());
                 insertNewStat.setInt(5, stat.getMapId());

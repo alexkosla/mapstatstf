@@ -7,7 +7,7 @@ public class StatEntity {
     private UUID statId;
 
     // id of the match in the logs.tf database, for eventual integration with logs.tf API
-    private long logId;
+    private String logId;
 
     // String to store the 64-bit steamId number better on the front-end (js doesn't represent it well as a long)
     // foreign key to user table
@@ -39,7 +39,7 @@ public class StatEntity {
     // length the player played in the match in seconds
     private int seconds;
 
-    public StatEntity(UUID statId, long logId, String steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
+    public StatEntity(UUID statId, String logId, String steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
         this.statId = statId;
         this.logId = logId;
         this.steam64Id = steam64Id;
@@ -61,11 +61,11 @@ public class StatEntity {
         this.statId = statId;
     }
 
-    public long getLogId() {
+    public String getLogId() {
         return logId;
     }
 
-    public void setLogId(long logId) {
+    public void setLogId(String logId) {
         this.logId = logId;
     }
 
