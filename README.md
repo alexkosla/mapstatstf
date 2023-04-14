@@ -15,6 +15,8 @@ To access the front-end, go to http://localhost:8999/. The back-end querying for
 
 ![image](https://user-images.githubusercontent.com/33711919/229601692-aaae036d-be2a-4a69-934b-e807ee58a1ee.png)
 
+# MySQL
+You'll need MySQL and JDBC installed. I did this by using this installer (https://dev.mysql.com/downloads/installer/) and picking the standard installation. During the installation, set your username to 'root' and your password for root to be 'admin'. I also used the default port of 3306. If you use a different password for root or a different port, you'll need to go into the jdbc connection calls in the Stat and User services and change the password/port. To execute my create-db.sql script, I simply opened it up in MySQL Workbench (included in the standard installation) and ran it. 
 
 # Standalone
 You can also run the back-end from Tomcat standalone, provided it's Tomcat 10.0.2. Go to localhost:8087/manager/html (or whichever port you have tomcat set up at), enter your admin details, and you can upload the war file provided here by clicking the Choose File button, then Deploy beneath it.
