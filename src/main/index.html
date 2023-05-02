@@ -1,0 +1,93 @@
+<html>
+  <!-- html specifies the text within the brackets are html code -->
+  <head>
+    <!-- there is a separate css file for all the map pages -->
+      <link rel="stylesheet" type="text/css"
+      href="stylesheets/index.css">
+      <link rel="stylesheet" type="text/css"
+      href="stylesheets/sidebar.css">
+      <!-- separate file for the javascript code and i'll also need to reference some kind of jquery -->
+      <script src="sidebar.js"></script> 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  </head>
+  
+  <!-- this nav contains a list of pages to link to at the top, it's styled by css -->
+  <nav>
+      <ul>
+        <!-- the active class will make the background behind the text green -->
+        <!-- I also aligned "My Stats" on the right using float:right -->
+          <div id="main">
+            <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
+            <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
+            <li><a class="active" href="index.html">Maps</a></li>
+          </div>
+          <li style="float:right"><a href="sniper.html">My Stats</a></li>      
+        </ul>
+  </nav> 
+
+  <!-- a sidebar that is defined by the sidebar class in css -->
+  <div id="mySidebar" class="sidebar">
+    <!-- a close button that triggers the closeNav function -->
+    <a class="closebtn" onclick="closeNav()">&times;</a>
+    <ul>
+        <!-- links to the two form pages -->
+        <li><a href="new-user.html">Add new user</a></li>
+        <li><a href="new-stats.html">Submit stats</a></li>
+    </ul>
+  </div>
+    <body>
+      <!-- an image gallery using the gallery class -->
+        <div class="gallery" id="upward">
+          <!-- target="_blank" will make the browser open the link (upward.html) in a new tab -->
+          <a target="_blank" href="upward.html">
+            <!-- load the image at the specified link, if it's not found, then display the alt text -->
+            <img src="img/pl_upward_f10.png" alt="Upward" onclick="hideUpward()">
+          </a>
+          <!-- displays some h2 (subheader) text using div.desc in styles.css -->
+          <div class="desc"><h2>Upward</h2></div>
+        </div>
+        
+        <div class="gallery" id="swiftwater">
+          <a target="_blank" href="swiftwater.html">
+            <img src="img/pl_swiftwater_final1-full.jpg" alt="Swiftwater">
+          </a>
+          <div class="desc"><h2>Swiftwater</h2></div>
+        </div>
+        
+        <div class="gallery">
+          <a target="_blank" href="vigil.html">
+            <img src="img/pl_vigil_rc9-full.png" alt="Vigil">
+          </a>
+          <div class="desc"><h2>Vigil</h2></div>
+        </div>
+        
+        <div class="gallery">
+          <a target="_blank" href="steel.html">
+            <img src="img/cp_steel_f12-full.png" alt="Steel">
+          </a>
+          <div class="desc"><h2>Steel</h2></div>
+        </div>
+    
+        <div class="gallery">
+          <a target="_blank" href="product.html">
+            <img src="img/koth_product_final.png" alt="Product">
+          </a>
+          <div class="desc"><h2>Product</h2></div>
+        </div>
+
+        <div class="gallery">
+          <a target="_blank" href="ashville.html">
+            <img src="img/koth_ashville_final-full.png" alt="Ashville">
+          </a>
+          <div class="desc"><h2>Ashville</h2></div>
+        </div>
+
+        <div class="gallery">
+          <a target="_blank" href="proot.html">
+            <img src="img/koth_proot_b5a.png" alt="Proot">
+          </a>
+          <div class="desc"><h2>Proot</h2></div>
+        </div>       
+      </body>
+</html>

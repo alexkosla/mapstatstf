@@ -1,0 +1,210 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css"
+        href="stylesheets/forms.css">
+        <link rel="stylesheet" type="text/css"
+        href="stylesheets/sidebar.css">
+        <script src="new-stats.js"></script> 
+        <script src="sidebar.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->    
+    <nav>
+        <ul>
+            <!-- the active class will make the background behind the text green -->
+            <!-- I also aligned "My Stats" on the right using float:right -->
+          <div id="main">
+            <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
+            <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
+            <li><a href="index.html">Maps</a></li>
+          </div>
+            <li style="float:right"><a href="sniper.html">My Stats</a></li>
+        </ul>
+    </nav>
+
+  <!-- a sidebar that is defined by the sidebar class in css -->
+  <div id="mySidebar" class="sidebar">
+    <!-- a close button that triggers the closeNav function -->
+    <a class="closebtn" onclick="closeNav()">&times;</a>
+    <ul>
+        <!-- links to the two form pages -->
+        <li><a href="new-user.html">Add new user</a></li>
+        <li><a href="new-stats.html">Submit stats</a></li>
+    </ul>
+  </div>
+  
+    <body>
+      <!-- the mystats class is split into 2 columns, one for the class image and one for the table -->
+      <h2 style="text-align:center">
+          Submit new stats
+      </h1>
+      <div class="container">
+          <!-- https://www.w3schools.com/js/js_validation.asp -->
+        <form id="addStatsForm" method="post">
+          <div class="row">
+            <div class="col-25">
+              <label for="steam64ID">Steam 64 Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="steam64ID" name="steam64ID" placeholder="Enter steam64 id">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="logId">Log Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="logId" name="logId" placeholder="Enter the logs.tf id (logs.tf/[this number])">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="map">Map</label>
+            </div>
+            <div class="col-75">
+              <select id="map" name="map">
+                <option value="0">Steel</option>
+                <option value="1">Ashville</option>
+                <option value="2">Product</option>
+                <option value="3">Proot</option>
+                <option value="4">Swiftwater</option>
+                <option value="5">Upward</option>
+                <option value="6">Vigil</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="class">Class</label>
+            </div>
+            <div class="col-75">
+              <select id="class" name="class">
+                <option value="Scout">Scout</option>
+                <option value="Demo">Demo</option>
+                <option value="Heavy">Heavy</option>
+                <option value="Sniper">Sniper</option>
+                <option value="Spy">Spy</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="killcount">Kills</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="killcount" name="killcount" placeholder="Enter number of kills">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="assistcount">Assists</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="assistcount" name="assistcount" placeholder="Enter number of assists">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="deathcount">Deaths</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="deathcount" name="deathcount" placeholder="Enter number of deaths">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="damage">Damage</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="damage" name="damage" placeholder="Enter total amount of damage dealt">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="damageTaken">Damage Taken</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="damageTaken" name="damageTaken" placeholder="Enter total amount of damage taken">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="seconds">Seconds Played</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="seconds" name="seconds" placeholder="Enter total amount of seconds the player played">
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn-load" type="button" style="float: left" 
+                id="btn-load" onclick="fetchStats()">Load Stats</button>
+            <button class="btn-submit" type="button" style="float: right;"
+                id="btn-submit" onclick="validateForm()">Submit</button>
+          </div>
+        </form>
+      </div> 
+      <div class="classstats">
+        <!-- hard-coded stats that are temporary
+            I'll put a bunch of stats in a database
+            and them access them via js eventually -->
+        <table id="all-stats">
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
+          <!-- slightly larger cells for steam64ID because it's the longest -->
+          <col style="width:13%">
+          <col style="width:10%">
+          <col style="width:10%">
+          <col style="width:10%">
+          <!-- slightly shorter cells for kills, assists, and deaths as they are the smallest #s -->
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:10%">
+          <col style="width:10%">
+          <col style="width:10%">
+            <tr>
+              <th><h2>Steam64ID</h2></th>
+              <th><h2>Log ID</h2></th>
+              <th><h2>Map</h2></th>
+              <th><h2>Class</h2></th>
+              <th><h2>Kills</h2></th>
+              <th><h2>Assists</h2></th>
+              <th><h2>Deaths</h2></th>
+              <th><h2>Damage</h2></th>
+              <th><h2>Damage Taken</h2></th>
+              <th><h2>Seconds Played</h2></th>
+            </tr>
+        </table>
+      </br>
+        <h2 style="text-align: center;">Click on a cell above to see additional user information!</h2>
+        <table id="joined-stats">
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
+          <!-- slightly larger cells for steam64ID because it's the longest -->
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+          <!-- slightly shorter cells for kills, assists, and deaths as they are the smallest #s -->
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+          <col style="width:9%">
+            <tr>
+              <th><h2>Username</h2></th>
+              <th><h2>Log ID</h2></th>
+              <th><h2>Map</h2></th>
+              <th><h2>Preferred Class</h2></th>
+              <th><h2>Class</h2></th>
+              <th><h2>Kills</h2></th>
+              <th><h2>Assists</h2></th>
+              <th><h2>Deaths</h2></th>
+              <th><h2>Damage</h2></th>
+              <th><h2>Damage Taken</h2></th>
+              <th><h2>Seconds Played</h2></th>
+            </tr>
+        </table>
+      </div>
+    </body>
+</html>

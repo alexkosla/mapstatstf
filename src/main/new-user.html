@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css"
+        href="stylesheets/forms.css">
+        <link rel="stylesheet" type="text/css"
+        href="stylesheets/sidebar.css">
+        <!-- separate file for the javascript code and i'll also need to reference some kind of jquery -->
+        <script src="sidebar.js"></script> 
+        <script src="new-user.js"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->    
+    <nav>
+        <ul>
+            <!-- the active class will make the background behind the text green -->
+            <!-- I also aligned "My Stats" on the right using float:right -->
+          <div id="main">
+            <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
+            <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
+            <li><a class="active" href="index.html">mapstats.tf</a></li>
+            <li><a href="index.html">Maps</a></li>
+          </div>
+          <li style="float:right"><a class="active" href="sniper.html">My Stats</a></li>
+        </ul>
+    </nav>
+
+    <!-- a sidebar that is defined by the sidebar class in css -->
+    <div id="mySidebar" class="sidebar">
+      <!-- a close button that triggers the closeNav function -->
+      <a class="closebtn" onclick="closeNav()">&times;</a>
+      <ul>
+          <!-- links to the two form pages -->
+          <li><a href="new-user.html">Add new user</a></li>
+          <li><a href="new-stats.html">Submit stats</a></li>
+      </ul>
+    </div>
+    
+    <body>
+      <!-- the mystats class is split into 2 columns, one for the class image and one for the table -->
+      <h2 style="text-align:center">
+          Add new user
+      </h1>
+      <!-- container that holds all of the form-related things -->
+      <div class="container">
+        <!-- a form that with various fields that are submitted -->
+        <form id="addUserForm">
+          <!-- each row of the form has a 25% width column for the field name 
+            and a 75% width column for entering data -->
+          <div class="row">
+            <div class="col-25">
+              <!-- the label for the username object -->
+              <label for="username">Username</label>
+            </div>
+            <div class="col-75">
+              <!-- set id for DOM access
+                set the name to access the form control
+                use input type text to tell html to have a textbox
+                placeholder for the hint text  -->
+              <input type="text" id="username" name="username" placeholder="Enter username">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <!-- one common ID format used for identifying users on steam, an online games platform -->
+              <label for="steam64Id">Steam64 Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="steam64Id" name="steam64Id" placeholder="Enter steam64Id (76561198034955422 format)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <!-- an alternative ID format used for identifying users on steam, an online games platform -->
+              <label for="steam3Id">Steam3 Id</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="steam3Id" name="steam3Id" placeholder="Enter steam3Id ([U:1:74689694] format)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="preferredClass">Preferred Class</label>
+            </div>
+            <div class="col-75">
+              <!-- user selects their preferred class -->
+              <select id="preferredClass" name="preferredClass">
+                <option value="Scout">Scout</option>
+                <option value="Soldier">Soldier</option>
+                <option value="Pyro">Pyro</option>
+                <option value="Demo">Demo</option>
+                <option value="Heavy">Heavy</option>
+                <option value="Medic">Medic</option>
+                <option value="Sniper">Sniper</option>
+                <option value="Spy">Spy</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+                <label for="admin">Is Admin?</label>
+            </div>
+            <div class="col-75">
+              <!-- use the switch class for styling
+                  use the checkbox type of input (but the display will be changed from vanilla, see css
+                  id and name fields set for DOM and form control access -->
+                <label class="switch">
+                    <input type="checkbox" id="admin" name="admin">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+          </div>
+          <div class="row">
+            <!-- at the bottom of the form, have two buttons
+                the left one loads stats by calling loadStats()
+                the right one submits stats by first calling validateForm() -->
+            <button class="btn-load" type="button" style="float: left" 
+                id="btn-load" onclick="fetchUsers()">Load Stats</button>
+            <button class="btn-submit" type="button" style="float: right;"
+                id="btn-submit" onclick="validateForm()">Submit</button>
+          </div>
+        </form>
+      </div> 
+      <div class="classstats">
+        <!-- hard-coded stats that are temporary
+            I'll put a bunch of stats in a database
+            and them access them via js eventually -->
+        <table id="user-stats">
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
+          <col style="width:20%">
+          <col style="width:20%">
+          <col style="width:20%">
+          <col style="width:20%">
+          <col style="width:20%">
+            <tr>
+              <th><h2>Username</h2></th>
+              <th><h2>Steam64ID</h2></th>
+              <th><h2>Steam3ID</h2></th>
+              <th><h2>Preferred Class</h2></th>
+              <th><h2>Is Admin?</h2></th>
+            </tr>
+        </table>
+      </div>
+    </body>
+</html>
