@@ -6,22 +6,20 @@
         <link rel="stylesheet" type="text/css"
         href="stylesheets/sidebar.css">
         <!-- separate file for the javascript code and i'll also need to reference some kind of jquery -->
-        <script src="sidebar.js"></script> 
+        <script src="js/sidebar.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     </head>
     
-    <!-- this nav contains a list of pages to link to at the top, it's styled by css -->
     <nav>
-        <ul>
-          <!-- the active class will make the background behind the text green -->
-          <!-- I also aligned "My Stats" on the right using float:right -->
-          <div id="main">
-            <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
-            <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
-            <li><a class="active" href="index.html">mapstats.tf</a></li>
-            <li><a href="index.html">Maps</a></li>
-          </div>
-          <li style="float:right"><a href="sniper.html">My Stats</a></li>
+      <!-- the active class will make the background behind the text green -->
+      <!-- I also aligned "My Stats" on the right using float:right -->
+        <ul><div id="main">
+          <!-- hamburger menu on the left, uses an icon that when clicked, tells js to open the sidebar -->
+          <li id="indexmenu" onclick="openNav()"><a>&#9776;</a></li>
+          <li><a class="active" href="index.html">mapstats.tf</a></li>
+          <li><a href="index.html">Maps</a></li>
+        </div>
+        <li style="float:right"><a href="sniper.html">My Stats</a></li>
         </ul>
     </nav> 
 
@@ -38,55 +36,50 @@
     
 
     <!-- The mapstats class will eventually dynamically get data
-          from the database as needed, these are placeholder numbers-->
+    from the database as needed, these are placeholder numbers-->
     <body>
-      <div class="mapstats">
-        <!-- the mapstats class uses css that splits it into two columns -->
-        <!-- the image of the map is on the left -->
-        <img src="img/koth_product_final.png">
-        <!-- on the right we'll have the map title (h1) -->
-        <h1>Product</h1>
-        <!-- and a simple table with dummy values for map stats, this varies for each map -->
-        <table>
-          <tr>
-            <td>RED win %</td>
-            <td>51%</td>
-          </tr>
-          <tr>
-            <td>RED mid win %</td>
-            <td>51%</td>
-          </tr>
-          <tr>
-            <td>Average midfight length</td>
-            <td>1:04</td>
-          </tr>
-          <tr>
-            <td>Average round time</td>
-            <td>5:27</td>
-          </tr>
-          <tr>
-            <td>Average ubers used per team per round</td>
-            <td>3.31</td>
-          </tr>
-          <tr>
-            <td>Average drops per team per round</td>
-            <td>0.66</td>
-          </tr>
-
-        </table>
+        <div class="mapstats">
+          <!-- the mapstats class uses css that splits it into two columns -->
+          <!-- the image of the map is on the left -->
+          <!-- on the right we'll have the map title (h1) -->
+          <!-- and a simple table with dummy values for map stats -->
+            <img src="img/pl_vigil_rc9-full.png">
+            <h1>Vigil</h1>
+            <table>
+              <tr>
+                  <td>Starting RED win %</td>
+                  <td>46%</td>
+              </tr>
+              <tr>
+                  <td>Median 1st hold time:</td>
+                  <td>1:03</td>
+              </tr>
+              <tr>
+                  <td>Median 2nd hold time:</td>
+                  <td>2:34</td>
+              </tr>
+              <tr>
+                  <td>Median 3rd hold time:</td>
+                  <td>2:09</td>
+              </tr>
+              <tr>
+                  <td>Median last hold time:</td>
+                  <td>2:26</td>
+              </tr>
+            </table>
       </div>
       <div class="classstats">
         <!-- hard-coded stats that are temporary
             I'll put a bunch of stats in a database
             and them access them via js eventually -->
         <table>
-          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
           <col style="width:10%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
           <col style="width:15%">
+          <!-- using html5 i can set the specific widths of each column in the subsequent table -->
             <tr>
               <th>Class</th>
               <th>Kill/m</th>
@@ -120,7 +113,7 @@
               <td>278</td>
             </tr>
             <tr>
-              <td>Demoman</td>
+              <td>Demo</td>
               <td>0.64</td>
               <td>0.35</td>
               <td>0.65</td>
