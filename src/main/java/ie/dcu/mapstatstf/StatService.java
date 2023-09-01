@@ -77,7 +77,7 @@ public class StatService {
     }
 
     // function returns a list of all users saved
-    public List<UserStatEntity> listUserStats(long steam64Id)
+    public List<UserStatEntity> listUserStats(long steam64Id, String classNameFilter)
     {
         // define some empty lists to hold objects we get from the database
         ArrayList<StatModel> statList = new ArrayList<StatModel>();
@@ -162,7 +162,7 @@ public class StatService {
 
                     // do the same for the statList, filter them for the same steam64Id
                     List<StatModel> filteredStats = statList.stream()
-                            .filter(st ->  st.getSteam64Id() == steam64Id)
+                            .filter(st ->  st.getSteam64Id() == steam64Id && st.getClassName() == classNameFilter)
                             .collect(Collectors.toList());
 
                     // go through all of the filteredStats
