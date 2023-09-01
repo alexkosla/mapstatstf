@@ -1,4 +1,4 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Entity;
 
 public class UserStatEntity {
 

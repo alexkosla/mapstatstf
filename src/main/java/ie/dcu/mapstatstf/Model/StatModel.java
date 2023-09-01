@@ -1,18 +1,20 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Model;
+//import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-public class StatEntity {
+public class StatModel {
+
     // primary key of statId, for easy GET calls rather than needing to specify both logId and steam64Id
     private UUID statId;
 
     // id of the match in the logs.tf database, for eventual integration with logs.tf API
-    private String logId;
+    private long logId;
 
-    // String to store the 64-bit steamId number better on the front-end (js doesn't represent it well as a long)
+    // long to store the 64-bit steamId number
     // foreign key to user table
     // used by various apis integrated with a popular gaming service called steam
-    private String steam64Id;
+    private long steam64Id;
 
     // Id of the map in map table of database
     // foreign key to map table
@@ -39,7 +41,7 @@ public class StatEntity {
     // length the player played in the match in seconds
     private int seconds;
 
-    public StatEntity(UUID statId, String logId, String steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
+    public StatModel(UUID statId, long logId, long steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
         this.statId = statId;
         this.logId = logId;
         this.steam64Id = steam64Id;
@@ -61,19 +63,19 @@ public class StatEntity {
         this.statId = statId;
     }
 
-    public String getLogId() {
+    public long getLogId() {
         return logId;
     }
 
-    public void setLogId(String logId) {
+    public void setLogId(long logId) {
         this.logId = logId;
     }
 
-    public String getSteam64Id() {
+    public long getSteam64Id() {
         return steam64Id;
     }
 
-    public void setSteam64Id(String steam64Id) {
+    public void setSteam64Id(long steam64Id) {
         this.steam64Id = steam64Id;
     }
 

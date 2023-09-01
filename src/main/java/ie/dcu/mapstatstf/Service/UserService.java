@@ -1,15 +1,12 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Service;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
+import ie.dcu.mapstatstf.Model.UserModel;
 import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.io.File;
 import java.util.*;
 
 @Service

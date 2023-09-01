@@ -1,20 +1,20 @@
-package ie.dcu.mapstatstf;
-//import jakarta.validation.constraints.NotNull;
+package ie.dcu.mapstatstf.Entity;
+
+import ie.dcu.mapstatstf.Model.StatModel;
 
 import java.util.UUID;
 
-public class StatModel {
-
+public class StatEntity {
     // primary key of statId, for easy GET calls rather than needing to specify both logId and steam64Id
     private UUID statId;
 
     // id of the match in the logs.tf database, for eventual integration with logs.tf API
-    private long logId;
+    private String logId;
 
-    // long to store the 64-bit steamId number
+    // String to store the 64-bit steamId number better on the front-end (js doesn't represent it well as a long)
     // foreign key to user table
     // used by various apis integrated with a popular gaming service called steam
-    private long steam64Id;
+    private String steam64Id;
 
     // Id of the map in map table of database
     // foreign key to map table
@@ -41,7 +41,22 @@ public class StatModel {
     // length the player played in the match in seconds
     private int seconds;
 
-    public StatModel(UUID statId, long logId, long steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
+    public StatEntity(StatModel statModel)
+    {
+        this.statId = statModel.getStatId();
+        this.logId = String.valueOf(statModel.getLogId());
+        this.steam64Id = String.valueOf(statModel.getSteam64Id());
+        this.mapId = statModel.getMapId();
+        this.className = statModel.getClassName();
+        this.kills = statModel.getKills();
+        this.assists = statModel.getAssists();
+        this.deaths = statModel.getDeaths();
+        this.damage = statModel.getDamage();
+        this.damageTaken = statModel.getDamageTaken();
+        this.seconds = statModel.getSeconds();
+    }
+
+    public StatEntity(UUID statId, String logId, String steam64Id, String className, int mapId, int kills, int assists, int deaths, int damage, int damageTaken, int seconds) {
         this.statId = statId;
         this.logId = logId;
         this.steam64Id = steam64Id;
@@ -63,19 +78,19 @@ public class StatModel {
         this.statId = statId;
     }
 
-    public long getLogId() {
+    public String getLogId() {
         return logId;
     }
 
-    public void setLogId(long logId) {
+    public void setLogId(String logId) {
         this.logId = logId;
     }
 
-    public long getSteam64Id() {
+    public String getSteam64Id() {
         return steam64Id;
     }
 
-    public void setSteam64Id(long steam64Id) {
+    public void setSteam64Id(String steam64Id) {
         this.steam64Id = steam64Id;
     }
 

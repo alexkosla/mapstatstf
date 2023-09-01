@@ -1,5 +1,9 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Controller;
 
+import ie.dcu.mapstatstf.Entity.StatEntity;
+import ie.dcu.mapstatstf.Service.StatService;
+import ie.dcu.mapstatstf.Entity.UserStatEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +14,8 @@ import java.util.List;
 public class StatController {
 
     // create an instance of the StatService, where business logic is performed
-    private final StatService service;
+    @Autowired
+    private StatService service;
 
     public StatController(StatService service)
     {
@@ -32,7 +37,7 @@ public class StatController {
     {
         // put business logic in the service, out of the controller
         // returns a list of all stats saved with an ok message
-        return ResponseEntity.ok(service.listStats());
+        return ResponseEntity.ok(service.getAllStats());
     }
 
     // GET endpoint for returning list of all users
