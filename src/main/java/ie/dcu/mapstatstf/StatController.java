@@ -42,7 +42,7 @@ public class StatController {
     {
         // put business logic in the service, out of the controller
         // returns a list of all stats saved with an ok message
-        return ResponseEntity.ok(service.listUserStats(steam64Id));
+        return ResponseEntity.ok(service.listUserStats(steam64Id, "Sniper"));
     }
 
     // POST endpoint to submit a new stat entry
