@@ -1,5 +1,7 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Controller;
 
+import ie.dcu.mapstatstf.Model.UserModel;
+import ie.dcu.mapstatstf.Service.UserService;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
