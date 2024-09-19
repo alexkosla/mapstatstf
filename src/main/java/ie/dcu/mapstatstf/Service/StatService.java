@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatService {
-    @Autowired
     private StatRepository statRepository;
     // default constructor
     public StatService ()
