@@ -1,6 +1,7 @@
 package ie.dcu.mapstatstf.Controller;
 
 import ie.dcu.mapstatstf.Entity.StatEntity;
+import ie.dcu.mapstatstf.Repository.StatRepository;
 import ie.dcu.mapstatstf.Service.StatService;
 import ie.dcu.mapstatstf.Entity.UserStatEntity;
 import org.springframework.beans.factory.annotation.Autowired;
