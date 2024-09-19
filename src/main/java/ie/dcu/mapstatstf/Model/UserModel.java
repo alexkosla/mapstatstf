@@ -1,4 +1,4 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Model;
 public class UserModel {
     // long to store the 64-bit steamId number
     // primary key on user table

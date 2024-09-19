@@ -1,10 +1,13 @@
-package ie.dcu.mapstatstf;
+package ie.dcu.mapstatstf.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import ie.dcu.mapstatstf.Model.StatModel;
+import ie.dcu.mapstatstf.Model.UserModel;
+import ie.dcu.mapstatstf.Entity.StatEntity;
+import ie.dcu.mapstatstf.Entity.UserStatEntity;
+import ie.dcu.mapstatstf.Repository.StatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,10 +17,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatService {
+    private StatRepository statRepository;
     // default constructor
-    public StatService() {
+    public StatService ()
+    {}
+    public StatService(StatRepository statRepository) {
+        this.statRepository = statRepository;
     }
     // function returns a list of all users saved
+
+    public List<StatEntity> getAllStats()
+    {
+        List<StatEntity> statEntityList = new ArrayList<StatEntity>();
+        statRepository.findAll().forEach(sm -> statEntityList.add(new StatEntity(sm)));
+        return statEntityList;
+    }
     public List<StatEntity> listStats()
     {
         // attempt to open up a connection with the database with a hardcoded url, username, and password
