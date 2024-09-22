@@ -5,24 +5,25 @@ import ie.dcu.mapstatstf.Model.UserModel;
 import ie.dcu.mapstatstf.Entity.StatEntity;
 import ie.dcu.mapstatstf.Entity.UserStatEntity;
 import ie.dcu.mapstatstf.Repository.StatRepository;
+import ie.dcu.mapstatstf.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class StatService {
     private StatRepository statRepository;
+
+    private UserRepository userRepository;
     // default constructor
     public StatService ()
     {}
-    public StatService(StatRepository statRepository) {
+    public StatService(StatRepository statRepository, UserRepository userRepository) {
         this.statRepository = statRepository;
+        this.userRepository = userRepository;
     }
     // function returns a list of all users saved
 
@@ -32,191 +33,56 @@ public class StatService {
         statRepository.findAll().forEach(sm -> statEntityList.add(new StatEntity(sm)));
         return statEntityList;
     }
-    public List<StatEntity> listStats()
-    {
-        // attempt to open up a connection with the database with a hardcoded url, username, and password
-        try (Connection conn = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/",
-                        "root", "admin"))
-        {
-            // write a SQL query string and convert it to a java-friendly object
-            // query gets back all of the data from the masterstats table in mydb
-            PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.masterstats");
-            // execute the query and get back the results
-            ResultSet rs = selectStatement.executeQuery();
-
-            // create an empty list to store the contents of the result set
-            ArrayList<StatEntity> statList = new ArrayList<StatEntity>();
-
-            // while there is another entry in the result set...
-            while (rs.next()) {
-                // for this row in the result set, get data for the "StatId" column, parse it as a string
-                // then convert it to UUID type
-                UUID statId = UUID.fromString(rs.getString("StatId"));
-
-                // for this row in the result set, get data for the "LogId" column which is a long
-                // then convert it to a string, as javascript will cut off the least significant bits
-                // of a long, but not of a string
-                String logId = String.valueOf(rs.getLong("LogId"));
-
-                // for this row in the result set, get data for the "Steam64Id" column which is a long
-                // then convert it to a string, as javascript will cut off the least significant bits
-                // of a long, but not of a string
-                String steam64Id = String.valueOf(rs.getLong("Steam64Id"));
-
-                // continue in a similar fashion for the remaining fields in the masterstats table
-                String className = rs.getString("Class");
-                int mapId = rs.getInt("MapId");
-                int kills = rs.getInt("Kills");
-                int assists = rs.getInt("Assists");
-                int deaths = rs.getInt("Deaths");
-                int damage = rs.getInt("Damage");
-                int damageTaken = rs.getInt("Damage Taken");
-                int secondsPlayed = rs.getInt("SecondsPlayed");
-
-                // take all of these saved temporary fields and use them to create an instance of StatEntity
-                // we return a StatEntity rather than a StatModel to get around js quirks with handling longs (this has no longs)
-                // append this newly created StatEntity onto the statList
-                statList.add(new StatEntity(statId, logId, steam64Id, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
-            }
-            // once we've processed all of the results of the query and added them to the statList, return it
-            return statList;
-        } catch (Exception ex)
-        {
-            // print the stack trace in case there's an error here reading/writing to file
-            ex.printStackTrace();
-        }
-        // if anything goes awry, return an empty list
-        return Collections.emptyList();
-    }
 
     // function returns a list of all users saved
     public List<UserStatEntity> listUserStats(long steam64Id, String classNameFilter)
     {
         // define some empty lists to hold objects we get from the database
-        ArrayList<StatModel> statList = new ArrayList<StatModel>();
-        ArrayList<UserModel> userList = new ArrayList<UserModel>();
-
+        List<StatModel> statList = new ArrayList<StatModel>();
+        List<UserModel> userList = new ArrayList<UserModel>();
         // define a userstatentity list we'll return to the front-end
-        ArrayList<UserStatEntity> userStatEntities = new ArrayList<UserStatEntity>();
+        List<UserStatEntity> userStatEntities = new ArrayList<UserStatEntity>();
 
-        // attempt to open up a connection with the database with a hardcoded url, username, and password
-        try (Connection conn = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/",
-                        "root", "admin"))
+        statList = statRepository.findAll();
+
+        if(statList != null)
         {
-            // write a SQL query string and convert it to a java-friendly object
-            // query gets back all of the data from the masterstats table in mydb
-            PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.masterstats");
-            // execute the query and get back the results
-            ResultSet rs = selectStatement.executeQuery();
+            userList = userRepository.findAll();
 
-            // while there is another entry in the result set...
-            while (rs.next()) {
-                // for this row in the result set, get data for the "StatId" column, parse it as a string
-                // then convert it to UUID type
-                UUID statId = UUID.fromString(rs.getString("StatId"));
-
-                // for this row in the result set, get data for the "LogId" column which is a long
-                // then convert it to a string, as javascript will cut off the least significant bits
-                // of a long, but not of a string
-                long logId = rs.getLong("LogId");
-
-                // for this row in the result set, get data for the "Steam64Id" column which is a long
-                // then convert it to a string, as javascript will cut off the least significant bits
-                // of a long, but not of a string
-                long steam64Idtemp = rs.getLong("Steam64Id");
-
-                // continue in a similar fashion for the remaining fields in the masterstats table
-                String className = rs.getString("Class");
-                int mapId = rs.getInt("MapId");
-                int kills = rs.getInt("Kills");
-                int assists = rs.getInt("Assists");
-                int deaths = rs.getInt("Deaths");
-                int damage = rs.getInt("Damage");
-                int damageTaken = rs.getInt("Damage Taken");
-                int secondsPlayed = rs.getInt("SecondsPlayed");
-
-                // take all of these saved temporary fields and use them to create an instance of StatEntity
-                // we return a StatEntity rather than a StatModel to get around js quirks with handling longs (this has no longs)
-                // append this newly created StatEntity onto the statList
-                statList.add(new StatModel(statId, logId, steam64Idtemp, className, mapId, kills, assists, deaths, damage, damageTaken, secondsPlayed));
-            }
-            // if we got stats back from the database, we can try to filter them
-            if(statList != null)
+            if(userList != null)
             {
-                // write a SQL query string and convert it to a java-friendly object
-                // query gets back all of the data from the masterstats table in mydb
-                selectStatement = conn.prepareStatement("select * from mydb.users");
-                // execute the query and get back the results
-                rs = selectStatement.executeQuery();
+                // will return a list of length 1 because we've enforced steam64Id to be unique
+                // similar to a one-liner foreach loop that returns the list of all UserModels in the list
+                // where their steam64Id matches the steam64Id argument from the controller
+                List<UserModel> filteredUsers = userList.stream()
+                        .filter(usr ->  usr.getSteam64Id() == steam64Id)
+                        .collect(Collectors.toList());
+                UserModel user = filteredUsers.get(0);
 
-                // while there is another entry in the result set...
-                while (rs.next()) {
-                    // we get all of the columns from the result set to create a user model
-                    long steam64Idtemp = rs.getLong("Steam64Id");
-                    String steam3Id = rs.getString("Steam3Id");
-                    String username = rs.getString("Username");
-                    String preferredClass = rs.getString("PreferredClass");
-                    boolean isAdmin = rs.getBoolean("IsAdmin");
+                // do the same for the statList, filter them for the same steam64Id
+                List<StatModel> filteredStats = statList.stream()
+                        .filter(st ->  st.getSteam64Id() == steam64Id && st.getClassName() == classNameFilter)
+                        .collect(Collectors.toList());
 
-                    // create a userModel using the saved fields and append it to the user list
-                    userList.add(new UserModel(steam64Idtemp, steam3Id, username, preferredClass, isAdmin));
-                }
-
-                if(userList != null)
+                // go through all of the filteredStats
+                for(int i = 0; i < filteredStats.size(); i++)
                 {
-                    // will return a list of length 1 because we've enforced steam64Id to be unique
-                    // similar to a one-liner foreach loop that returns the list of all UserModels in the list
-                    // where their steam64Id matches the steam64Id argument from the controller
-                    List<UserModel> filteredUsers = userList.stream()
-                            .filter(usr ->  usr.getSteam64Id() == steam64Id)
-                            .collect(Collectors.toList());
-                    UserModel user = filteredUsers.get(0);
+                    // create an empty userStatEntity to fill manually
+//                    UserStatEntity userStat = new UserStatEntity();
+                    // iterate through the statList
+                    StatModel currStat = filteredStats.get(i);
+                    UserStatEntity userStat = new UserStatEntity(user, currStat);
 
-                    // do the same for the statList, filter them for the same steam64Id
-                    List<StatModel> filteredStats = statList.stream()
-                            .filter(st ->  st.getSteam64Id() == steam64Id && st.getClassName() == classNameFilter)
-                            .collect(Collectors.toList());
-
-                    // go through all of the filteredStats
-                    for(int i = 0; i < filteredStats.size(); i++)
-                    {
-                        // create an empty userStatEntity to fill manually
-                        UserStatEntity userStat = new UserStatEntity();
-                        // iterate through the statList
-                        StatModel currStat = filteredStats.get(i);
-
-                        // manually set all the fields of userStatEntity using data from both UserModel and StatModel
-                        userStat.setLogId(currStat.getLogId());
-                        userStat.setUsername(user.getUsername());
-                        userStat.setPreferredClass(user.getPreferredClass());
-                        userStat.setMapId(currStat.getMapId());
-                        userStat.setClassName(currStat.getClassName());
-                        userStat.setKills(currStat.getKills());
-                        userStat.setAssists(currStat.getAssists());
-                        userStat.setDeaths(currStat.getDeaths());
-                        userStat.setDamage(currStat.getDamage());
-                        userStat.setDamageTaken(currStat.getDamageTaken());
-                        userStat.setSeconds(currStat.getSeconds());
-
-                        // the newly created userstatentity to the userStatEntities list
-                        userStatEntities.add(userStat);
-                    }
-                    // returned the newly combined entity list
-                    return userStatEntities;
+                    // the newly created userstatentity to the userStatEntities list
+                    userStatEntities.add(userStat);
                 }
             }
-
-        } catch (Exception ex)
-        {
-            // print the stack trace in case there's an error here reading/writing to file
-            ex.printStackTrace();
         }
-        // if anything goes awry, return an empty list
-        return Collections.emptyList();
+        // returned the newly combined entity list
+        return userStatEntities;
     }
 
+    // TO-DO: probably not worth keeping as it'll be completely rewritten to work with logs.tf API
     // saves/appends a stat entry to a file
     public StatEntity addStat(StatEntity stat)
     {
