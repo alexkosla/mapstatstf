@@ -1,6 +1,8 @@
 package ie.dcu.mapstatstf.Service;
 
+import ie.dcu.mapstatstf.Entity.UserStatEntity;
 import ie.dcu.mapstatstf.Model.UserModel;
+import ie.dcu.mapstatstf.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +13,8 @@ import java.util.*;
 
 @Service
 public class UserService {
+    private UserRepository userRepository;
+
     // default constructor
     public UserService() {
     }
@@ -18,45 +22,10 @@ public class UserService {
     // function returns a list of all users saved
     public List<UserModel> listUsers()
     {
-        // attempt to open up a connection with the database with a hardcoded url, username, and password
-        try (Connection conn = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/",
-                        "root", "admin"))
-        {
-
-            // write a SQL query string and convert it to a java-friendly object
-            // query gets back all of the data from the users table in mydb
-            PreparedStatement selectStatement = conn.prepareStatement("select * from mydb.users");
-            // execute the query and get back the results
-            ResultSet rs = selectStatement.executeQuery();
-            // create an empty list to store the contents of the result set
-            ArrayList<UserModel> userList = new ArrayList<UserModel>();
-
-            // while there is another entry in the result set...
-            while (rs.next()) {
-                // for this row in the result set, get data for the "steam64Id" column, parse it as a long
-                long steam64Id = rs.getLong("Steam64Id");
-                // do similar for the remaining 4 fields
-                String steam3Id = rs.getString("Steam3Id");
-                String username = rs.getString("Username");
-                String preferredClass = rs.getString("PreferredClass");
-                boolean isAdmin = rs.getBoolean("IsAdmin");
-
-                // once you have all the fields read from the db, create a new userModel class using them
-                // and then add the object to the userList
-                userList.add(new UserModel(steam64Id, steam3Id, username, preferredClass, isAdmin));
-            }
-            // once we've processed all of the results of the query and added them to the userList, return it
-            return userList;
-        } catch (Exception ex)
-        {
-            // print the stack trace in case there's an error here reading/writing to file
-            ex.printStackTrace();
-        }
-        // if anything goes awry, return an empty list
-        return Collections.emptyList();
+        return userRepository.findAll();
     }
 
+    // TO-DO: rework this much later on, can probably be deleted now
     // saves/appends a user's info to a file
     public UserModel addUser(UserModel user)
     {

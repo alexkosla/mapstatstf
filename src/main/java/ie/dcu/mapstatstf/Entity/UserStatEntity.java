@@ -1,6 +1,24 @@
 package ie.dcu.mapstatstf.Entity;
 
+import ie.dcu.mapstatstf.Model.StatModel;
+import ie.dcu.mapstatstf.Model.UserModel;
+
 public class UserStatEntity {
+    public UserStatEntity() {}
+
+    public UserStatEntity(UserModel user, StatModel currStat) {
+        this.setLogId(currStat.getLogId());
+        this.setUsername(user.getUsername());
+        this.setPreferredClass(user.getPreferredClass());
+        this.setMapId(currStat.getMapId());
+        this.setClassName(currStat.getClassName());
+        this.setKills(currStat.getKills());
+        this.setAssists(currStat.getAssists());
+        this.setDeaths(currStat.getDeaths());
+        this.setDamage(currStat.getDamage());
+        this.setDamageTaken(currStat.getDamageTaken());
+        this.setSeconds(currStat.getSeconds());
+    }
 
     private long logId;
     private String username;
